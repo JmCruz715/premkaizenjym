@@ -43,34 +43,34 @@ const Profile = () => {
             href="https://www.facebook.com/jm.born67"
             target="_blank"
             rel="noopener noreferrer"
-            className="liquid-btn liquid-btn-brand px-4 py-2 text-sm font-semibold text-white inline-flex items-center gap-2"
+            className="liquid-btn liquid-btn-brand tap-press px-4 py-2 text-sm font-semibold text-white inline-flex items-center gap-2"
           >
             <Facebook className="w-4 h-4" /> Facebook
           </a>
           <Link
             to="/contact"
-            className="liquid-btn px-4 py-2 text-sm font-semibold text-white inline-flex items-center gap-2"
+            className="liquid-btn tap-press px-4 py-2 text-sm font-semibold text-white inline-flex items-center gap-2"
           >
             <MessageCircle className="w-4 h-4" /> Message
           </Link>
           <Link
             to="/about"
-            className="liquid-btn px-4 py-2 text-sm font-semibold text-white inline-flex items-center gap-2"
+            className="liquid-btn tap-press px-4 py-2 text-sm font-semibold text-white inline-flex items-center gap-2"
           >
             <Info className="w-4 h-4" /> About site
           </Link>
         </div>
 
         <div className="grid grid-cols-3 gap-3 mt-6 text-center">
-          <div className="glass rounded-2xl py-3">
+          <div className="glass rounded-2xl py-3 reveal tap-press">
             <p className="text-lg font-bold text-gradient">8</p>
             <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Apps</p>
           </div>
-          <div className="glass rounded-2xl py-3">
+          <div className="glass rounded-2xl py-3 reveal tap-press" style={{ transitionDelay: "80ms" }}>
             <p className="text-lg font-bold text-gradient">62M+</p>
             <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Downloads</p>
           </div>
-          <div className="glass rounded-2xl py-3">
+          <div className="glass rounded-2xl py-3 reveal tap-press" style={{ transitionDelay: "160ms" }}>
             <p className="text-lg font-bold text-gradient">4.8★</p>
             <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Rating</p>
           </div>

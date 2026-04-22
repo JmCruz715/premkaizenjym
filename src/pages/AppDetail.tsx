@@ -42,7 +42,7 @@ const AppDetail = () => {
     <article className="animate-fade-up">
       <Link
         to="/"
-        className="liquid-btn inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white mb-4"
+        className="liquid-btn tap-press inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white mb-4"
       >
         <ArrowLeft className="w-4 h-4" /> Back
       </Link>
@@ -55,7 +55,7 @@ const AppDetail = () => {
             alt={`${app.name} icon`}
             width={88}
             height={88}
-            className="w-22 h-22 sm:w-24 sm:h-24 rounded-3xl object-cover ring-1 ring-white/15 shadow-xl"
+            className="w-22 h-22 sm:w-24 sm:h-24 rounded-3xl object-cover ring-1 ring-white/15 shadow-xl animate-pop-in"
           />
           <div className="min-w-0">
             <h1 className="text-2xl font-bold">{app.name}</h1>
@@ -74,14 +74,14 @@ const AppDetail = () => {
           href={app.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="liquid-btn liquid-btn-brand mt-5 w-full px-5 py-3 text-sm font-semibold text-white inline-flex items-center justify-center gap-2"
+          className="liquid-btn liquid-btn-brand tap-press mt-5 w-full px-5 py-3 text-sm font-semibold text-white inline-flex items-center justify-center gap-2"
         >
           <Download className="w-4 h-4" /> Download APK · {app.size}
         </a>
       </section>
 
       {screenshots[app.id]?.length ? (
-        <section className="mt-4">
+        <section className="mt-4 reveal">
           <h2 className="font-semibold mb-3 px-1">Screenshots</h2>
           <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x snap-mandatory scrollbar-none">
             {screenshots[app.id].map((src, i) => (
@@ -90,23 +90,27 @@ const AppDetail = () => {
                 src={src}
                 alt={`${app.name} screenshot ${i + 1}`}
                 loading="lazy"
-                className="h-72 w-auto rounded-2xl object-cover ring-1 ring-white/15 shadow-lg snap-start shrink-0"
+                className="h-72 w-auto rounded-2xl object-cover ring-1 ring-white/15 shadow-lg snap-start shrink-0 tap-press"
               />
             ))}
           </div>
         </section>
       ) : null}
 
-      <section className="glass rounded-3xl p-5 mt-4">
+      <section className="glass rounded-3xl p-5 mt-4 reveal">
         <h2 className="font-semibold mb-2">About this app</h2>
         <p className="text-sm text-muted-foreground leading-relaxed">{app.description}</p>
       </section>
 
-      <section className="glass rounded-3xl p-5 mt-4">
+      <section className="glass rounded-3xl p-5 mt-4 reveal">
         <h2 className="font-semibold mb-3">Premium features</h2>
         <ul className="grid sm:grid-cols-2 gap-2">
-          {app.features.map((f) => (
-            <li key={f} className="flex items-start gap-2 text-sm">
+          {app.features.map((f, i) => (
+            <li
+              key={f}
+              className="flex items-start gap-2 text-sm reveal"
+              style={{ transitionDelay: `${i * 60}ms` }}
+            >
               <span className="mt-0.5 w-5 h-5 rounded-full bg-[image:var(--gradient-brand)] flex items-center justify-center shrink-0">
                 <Check className="w-3 h-3 text-white" />
               </span>
@@ -116,16 +120,16 @@ const AppDetail = () => {
         </ul>
       </section>
 
-      <section className="glass rounded-3xl p-5 mt-4 grid grid-cols-3 gap-3 text-center">
-        <div>
+      <section className="glass rounded-3xl p-5 mt-4 grid grid-cols-3 gap-3 text-center reveal">
+        <div className="tap-press">
           <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Category</p>
           <p className="font-semibold text-sm mt-1">{app.category}</p>
         </div>
-        <div>
+        <div className="tap-press">
           <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Size</p>
           <p className="font-semibold text-sm mt-1">{app.size}</p>
         </div>
-        <div>
+        <div className="tap-press">
           <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Version</p>
           <p className="font-semibold text-sm mt-1">{app.version}</p>
         </div>

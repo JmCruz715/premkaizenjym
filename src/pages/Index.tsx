@@ -17,10 +17,10 @@ const Index = () => {
           Hand-picked premium APKs — fully unlocked. Tap any app to learn more, or hit Get to download.
         </p>
         <div className="flex gap-2 mt-4">
-          <Link to="/about" className="liquid-btn px-4 py-2 text-xs font-semibold text-white inline-flex items-center gap-1.5">
+          <Link to="/about" className="liquid-btn tap-press px-4 py-2 text-xs font-semibold text-white inline-flex items-center gap-1.5">
             <Info className="w-4 h-4" /> About
           </Link>
-          <Link to="/contact" className="liquid-btn liquid-btn-brand px-4 py-2 text-xs font-semibold text-white inline-flex items-center gap-1.5">
+          <Link to="/contact" className="liquid-btn liquid-btn-brand tap-press px-4 py-2 text-xs font-semibold text-white inline-flex items-center gap-1.5">
             <MessageCircle className="w-4 h-4" /> Suggest an app
           </Link>
         </div>
