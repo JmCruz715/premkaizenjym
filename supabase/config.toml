@@ -1,1 +1,4 @@
 project_id = "ptolqesoisvnajvzxtle"
+
+[functions.generate-app-description]
+verify_jwt = true
