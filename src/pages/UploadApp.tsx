@@ -73,18 +73,19 @@ const UploadApp = () => {
       let finalCat = category || "App";
       let finalFeats = features;
       if (!finalDesc) {
+        toast.message("Generating AI description…");
         try {
-          const { data } = await supabase.functions.invoke("generate-app-description", {
+          const { data, error: fnErr } = await supabase.functions.invoke("generate-app-description", {
             body: { name, category },
           });
-          if (data && !data.error) {
-            finalTagline = data.tagline ?? "";
-            finalDesc = data.description ?? "";
-            finalCat = data.category ?? finalCat;
-            finalFeats = Array.isArray(data.features) ? data.features : [];
-          }
-        } catch {
-          // ignore — proceed without AI description
+          if (fnErr) throw fnErr;
+          if (data?.error) throw new Error(data.error);
+          finalTagline = data?.tagline ?? finalTagline;
+          finalDesc = data?.description ?? finalDesc;
+          finalCat = data?.category ?? finalCat;
+          finalFeats = Array.isArray(data?.features) ? data.features : finalFeats;
+        } catch (e: any) {
+          toast.error("AI description failed: " + (e.message || "unknown"));
         }
       }
 

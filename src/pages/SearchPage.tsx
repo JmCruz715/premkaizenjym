@@ -3,19 +3,22 @@ import { Search as SearchIcon } from "lucide-react";
 import { apps } from "@/data/apps";
 import { AppCard } from "@/components/AppCard";
 import { Header } from "@/components/Header";
+import { useUserApps } from "@/hooks/useUserApps";
 
 const SearchPage = () => {
   const [q, setQ] = useState("");
+  const { userApps } = useUserApps();
+  const all = useMemo(() => [...userApps, ...apps], [userApps]);
   const results = useMemo(() => {
     const t = q.trim().toLowerCase();
-    if (!t) return apps;
-    return apps.filter(
+    if (!t) return all;
+    return all.filter(
       (a) =>
         a.name.toLowerCase().includes(t) ||
         a.tagline.toLowerCase().includes(t) ||
         a.category.toLowerCase().includes(t)
     );
-  }, [q]);
+  }, [q, all]);
 
   return (
     <>
