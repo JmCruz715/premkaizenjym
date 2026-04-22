@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Check, Download, Star } from "lucide-react";
 import { findApp } from "@/data/apps";
 import { DonateButton } from "@/components/DonateButton";
+import { useUserApps } from "@/hooks/useUserApps";
 import spotifyShot from "@/assets/screens/spotify.jpg";
 import loktvShot from "@/assets/screens/loktv.jpg";
 import youtubeShot from "@/assets/screens/youtube.jpg";
@@ -26,7 +27,9 @@ const screenshots: Record<string, string[]> = {
 
 const AppDetail = () => {
   const { id } = useParams();
-  const app = findApp(id || "");
+  const { userApps, screenshots: userShots } = useUserApps();
+  const app = findApp(id || "") || userApps.find((a) => a.id === id);
+  const allShots = { ...screenshots, ...userShots };
 
   if (!app) {
     return (
@@ -76,6 +79,7 @@ const AppDetail = () => {
             href={app.url}
             target="_blank"
             rel="noopener noreferrer"
+            download
             className="liquid-btn liquid-btn-brand tap-press flex-1 px-5 py-3 text-sm font-semibold text-white inline-flex items-center justify-center gap-2"
           >
             <Download className="w-4 h-4" /> Download · {app.size}
@@ -85,11 +89,11 @@ const AppDetail = () => {
         </div>
       </section>
 
-      {screenshots[app.id]?.length ? (
+      {allShots[app.id]?.length ? (
         <section className="mt-4 reveal">
           <h2 className="font-semibold mb-3 px-1">Screenshots</h2>
           <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x snap-mandatory scrollbar-none">
-            {screenshots[app.id].map((src, i) => (
+            {allShots[app.id].map((src, i) => (
               <img
                 key={i}
                 src={src}
