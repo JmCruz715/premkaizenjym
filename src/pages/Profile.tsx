@@ -28,14 +28,14 @@ const Profile = () => {
         </div>
 
         <div className="mt-4 flex items-center justify-center gap-1.5">
-          <h2 className="text-2xl font-bold">Kaizen</h2>
+          <h2 className="text-2xl font-bold">JOHN LORENCE TAMAYO</h2>
           <BadgeCheck className="w-6 h-6 fill-[hsl(210_90%_55%)] text-white" aria-label="Verified" />
         </div>
         <p className="text-xs text-muted-foreground mt-1">Creator · Developer · APK curator</p>
 
         <p className="text-sm text-muted-foreground mt-4 max-w-sm mx-auto">
-          Hey, I'm Kaizen — the developer behind Kaizen Apps. I curate and share premium Android apps so anyone
-          can enjoy them for free. Built with love, gradients, and a lot of liquid glass.
+          Hey, I'm John Lorence Tamayo — the developer behind Kaizen Apps. I curate and share premium Android apps so
+          anyone can enjoy them for free. Built with love, gradients, and a lot of liquid glass.
         </p>
 
         <div className="flex flex-wrap justify-center gap-2 mt-5">
