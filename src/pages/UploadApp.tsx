@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, Upload, X, LogOut } from "lucide-react";
+import { Plus, Upload, X, Image as ImageIcon, LogOut } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Header } from "@/components/Header";
@@ -15,13 +15,7 @@ const UploadApp = () => {
   const [busy, setBusy] = useState(false);
 
   const [name, setName] = useState("");
-  const [tagline, setTagline] = useState("");
-  const [description, setDescription] = useState("");
-  const [version, setVersion] = useState("1.0");
-  const [size, setSize] = useState("");
-  const [category, setCategory] = useState("App");
   const [downloadUrl, setDownloadUrl] = useState("");
-  const [features, setFeatures] = useState("");
   const [iconFile, setIconFile] = useState<File | null>(null);
   const [shotFiles, setShotFiles] = useState<File[]>([]);
 
@@ -39,29 +33,19 @@ const UploadApp = () => {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isAdmin) {
-      toast.error("Admin role required");
-      return;
-    }
+    if (!isAdmin) return toast.error("Admin role required");
+    if (!iconFile) return toast.error("Please add an app icon");
     setBusy(true);
     try {
-      let iconUrl: string | null = null;
-      if (iconFile) iconUrl = await uploadFile("app-icons", iconFile);
-
+      const iconUrl = await uploadFile("app-icons", iconFile);
       const screenshots: string[] = [];
       for (const f of shotFiles) screenshots.push(await uploadFile("app-screenshots", f));
 
       const { error } = await supabase.from("user_apps").insert({
         slug: slugify(name) + "-" + Date.now().toString(36),
         name,
-        tagline,
-        description,
         icon_url: iconUrl,
-        version,
-        size,
-        category,
         download_url: downloadUrl,
-        features: features.split(",").map((f) => f.trim()).filter(Boolean),
         screenshots,
         created_by: user!.id,
       });
@@ -82,9 +66,9 @@ const UploadApp = () => {
       <>
         <Header title="Upload App" subtitle="Admin access required." />
         <div className="glass-strong rounded-3xl p-5 text-sm space-y-3">
-          <p>You're signed in as <strong>{user?.email}</strong> but don't have the <code>admin</code> role yet.</p>
+          <p>Naka-sign in ka as <strong>{user?.email}</strong> pero wala ka pang <code>admin</code> role.</p>
           <p className="text-muted-foreground text-xs">
-            Open Lovable Cloud → Database → <code>user_roles</code> and insert a row with your user_id and role <code>admin</code>.
+            Buksan ang Lovable Cloud → Database → <code>user_roles</code> at mag-insert ng row na may user_id mo at role <code>admin</code>.
           </p>
           <button
             onClick={() => supabase.auth.signOut().then(() => nav("/auth"))}
@@ -97,31 +81,87 @@ const UploadApp = () => {
     );
   }
 
+  const iconPreview = iconFile ? URL.createObjectURL(iconFile) : null;
+
   return (
     <>
-      <Header title="Upload App" subtitle="Add a new premium app." />
-      <form onSubmit={submit} className="glass-strong rounded-3xl p-5 space-y-3 animate-fade-up">
-        <Field label="App name" v={name} set={setName} required />
-        <Field label="Tagline" v={tagline} set={setTagline} />
+      <Header title="Quick Upload" subtitle="Mag-add ng bagong app sa 4 na hakbang lang." />
+      <form onSubmit={submit} className="glass-strong rounded-3xl p-5 space-y-4 animate-fade-up">
+        {/* Icon picker */}
+        <div className="flex items-center gap-3">
+          <label className="relative w-20 h-20 rounded-2xl border-2 border-dashed border-white/20 bg-background/30 cursor-pointer hover:border-white/40 transition flex items-center justify-center overflow-hidden shrink-0">
+            {iconPreview ? (
+              <img src={iconPreview} alt="icon preview" className="w-full h-full object-cover" />
+            ) : (
+              <Plus className="w-7 h-7 text-muted-foreground" />
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => setIconFile(e.target.files?.[0] ?? null)}
+            />
+          </label>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold">App icon</p>
+            <p className="text-xs text-muted-foreground">Pindutin para pumili ng image</p>
+          </div>
+        </div>
+
+        {/* App name */}
         <div>
-          <label className="text-xs text-muted-foreground">Description</label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            rows={4}
+          <label className="text-xs text-muted-foreground">App name</label>
+          <input
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="e.g. Spotify Premium"
             className="mt-1 w-full bg-background/40 rounded-xl px-4 py-3 text-sm border border-white/10 outline-none focus:border-white/30"
           />
         </div>
-        <div className="grid grid-cols-2 gap-2">
-          <Field label="Version" v={version} set={setVersion} />
-          <Field label="Size" v={size} set={setSize} placeholder="e.g. 45 MB" />
-        </div>
-        <Field label="Category" v={category} set={setCategory} />
-        <Field label="Download URL (APK)" v={downloadUrl} set={setDownloadUrl} required type="url" />
-        <Field label="Features (comma separated)" v={features} set={setFeatures} placeholder="Ad-free, 4K, Offline" />
 
-        <FileField label="App icon" multiple={false} onChange={(fs) => setIconFile(fs[0] ?? null)} files={iconFile ? [iconFile] : []} />
-        <FileField label="Screenshots" multiple onChange={setShotFiles} files={shotFiles} />
+        {/* APK link */}
+        <div>
+          <label className="text-xs text-muted-foreground">APK download link</label>
+          <input
+            required
+            type="url"
+            value={downloadUrl}
+            onChange={(e) => setDownloadUrl(e.target.value)}
+            placeholder="https://..."
+            className="mt-1 w-full bg-background/40 rounded-xl px-4 py-3 text-sm border border-white/10 outline-none focus:border-white/30"
+          />
+        </div>
+
+        {/* Screenshots */}
+        <div>
+          <p className="text-xs text-muted-foreground mb-2">Screenshots ({shotFiles.length})</p>
+          <div className="flex gap-2 flex-wrap">
+            {shotFiles.map((f, i) => (
+              <div key={i} className="relative w-20 h-28 rounded-xl overflow-hidden ring-1 ring-white/15">
+                <img src={URL.createObjectURL(f)} alt="" className="w-full h-full object-cover" />
+                <button
+                  type="button"
+                  onClick={() => setShotFiles(shotFiles.filter((_, j) => j !== i))}
+                  className="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/70 flex items-center justify-center"
+                >
+                  <X className="w-3 h-3 text-white" />
+                </button>
+              </div>
+            ))}
+            <label className="w-20 h-28 rounded-xl border-2 border-dashed border-white/20 bg-background/30 cursor-pointer hover:border-white/40 transition flex flex-col items-center justify-center gap-1">
+              <Plus className="w-5 h-5 text-muted-foreground" />
+              <span className="text-[10px] text-muted-foreground">Add</span>
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
+                onChange={(e) => setShotFiles([...shotFiles, ...Array.from(e.target.files ?? [])])}
+              />
+            </label>
+          </div>
+        </div>
 
         <button
           type="submit"
@@ -134,54 +174,5 @@ const UploadApp = () => {
     </>
   );
 };
-
-const Field = ({
-  label, v, set, required, type = "text", placeholder,
-}: { label: string; v: string; set: (s: string) => void; required?: boolean; type?: string; placeholder?: string }) => (
-  <div>
-    <label className="text-xs text-muted-foreground">{label}</label>
-    <input
-      type={type}
-      required={required}
-      value={v}
-      onChange={(e) => set(e.target.value)}
-      placeholder={placeholder}
-      className="mt-1 w-full bg-background/40 rounded-xl px-4 py-3 text-sm border border-white/10 outline-none focus:border-white/30"
-    />
-  </div>
-);
-
-const FileField = ({
-  label, multiple, onChange, files,
-}: { label: string; multiple: boolean; onChange: (fs: File[]) => void; files: File[] }) => (
-  <div>
-    <label className="text-xs text-muted-foreground">{label}</label>
-    <label className="mt-1 flex items-center gap-2 px-4 py-3 rounded-xl border border-dashed border-white/20 bg-background/30 cursor-pointer hover:border-white/40 transition">
-      <Plus className="w-4 h-4" />
-      <span className="text-sm text-muted-foreground">
-        {files.length ? `${files.length} file${files.length > 1 ? "s" : ""} selected` : `Add ${label.toLowerCase()}`}
-      </span>
-      <input
-        type="file"
-        accept="image/*"
-        multiple={multiple}
-        className="hidden"
-        onChange={(e) => onChange(Array.from(e.target.files ?? []))}
-      />
-    </label>
-    {files.length > 1 && (
-      <div className="flex flex-wrap gap-1.5 mt-2">
-        {files.map((f, i) => (
-          <span key={i} className="text-[10px] bg-white/10 rounded-full px-2 py-1 inline-flex items-center gap-1">
-            {f.name.slice(0, 18)}
-            <button type="button" onClick={() => onChange(files.filter((_, j) => j !== i))}>
-              <X className="w-3 h-3" />
-            </button>
-          </span>
-        ))}
-      </div>
-    )}
-  </div>
-);
 
 export default UploadApp;
