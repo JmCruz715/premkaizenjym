@@ -1,0 +1,99 @@
+import { Link, useParams } from "react-router-dom";
+import { ArrowLeft, Check, Download, Star } from "lucide-react";
+import { findApp } from "@/data/apps";
+
+const AppDetail = () => {
+  const { id } = useParams();
+  const app = findApp(id || "");
+
+  if (!app) {
+    return (
+      <div className="text-center py-20">
+        <p className="text-muted-foreground">App not found.</p>
+        <Link to="/" className="liquid-btn liquid-btn-brand inline-block mt-4 px-4 py-2 text-sm font-semibold text-white">
+          Back home
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <article className="animate-fade-up">
+      <Link
+        to="/"
+        className="liquid-btn inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white mb-4"
+      >
+        <ArrowLeft className="w-4 h-4" /> Back
+      </Link>
+
+      <section className="glass-strong rounded-3xl p-6 relative overflow-hidden">
+        <div className={`absolute -top-16 -right-16 w-48 h-48 rounded-full bg-gradient-to-br ${app.accent} opacity-40 blur-3xl`} />
+        <div className="flex items-center gap-4 relative">
+          <img
+            src={app.icon}
+            alt={`${app.name} icon`}
+            width={88}
+            height={88}
+            className="w-22 h-22 sm:w-24 sm:h-24 rounded-3xl object-cover ring-1 ring-white/15 shadow-xl"
+          />
+          <div className="min-w-0">
+            <h1 className="text-2xl font-bold">{app.name}</h1>
+            <p className="text-xs text-muted-foreground">{app.tagline}</p>
+            <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
+              <span className="flex items-center gap-1">
+                <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" /> {app.rating}
+              </span>
+              <span>{app.downloads}</span>
+              <span>v{app.version}</span>
+            </div>
+          </div>
+        </div>
+
+        <a
+          href={app.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="liquid-btn liquid-btn-brand mt-5 w-full px-5 py-3 text-sm font-semibold text-white inline-flex items-center justify-center gap-2"
+        >
+          <Download className="w-4 h-4" /> Download APK · {app.size}
+        </a>
+      </section>
+
+      <section className="glass rounded-3xl p-5 mt-4">
+        <h2 className="font-semibold mb-2">About this app</h2>
+        <p className="text-sm text-muted-foreground leading-relaxed">{app.description}</p>
+      </section>
+
+      <section className="glass rounded-3xl p-5 mt-4">
+        <h2 className="font-semibold mb-3">Premium features</h2>
+        <ul className="grid sm:grid-cols-2 gap-2">
+          {app.features.map((f) => (
+            <li key={f} className="flex items-start gap-2 text-sm">
+              <span className="mt-0.5 w-5 h-5 rounded-full bg-[image:var(--gradient-brand)] flex items-center justify-center shrink-0">
+                <Check className="w-3 h-3 text-white" />
+              </span>
+              <span className="text-muted-foreground">{f}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="glass rounded-3xl p-5 mt-4 grid grid-cols-3 gap-3 text-center">
+        <div>
+          <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Category</p>
+          <p className="font-semibold text-sm mt-1">{app.category}</p>
+        </div>
+        <div>
+          <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Size</p>
+          <p className="font-semibold text-sm mt-1">{app.size}</p>
+        </div>
+        <div>
+          <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Version</p>
+          <p className="font-semibold text-sm mt-1">{app.version}</p>
+        </div>
+      </section>
+    </article>
+  );
+};
+
+export default AppDetail;
