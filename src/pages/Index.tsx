@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { apps } from "@/data/apps";
 import { AppCard } from "@/components/AppCard";
 import { Header } from "@/components/Header";
-import { AdminUploadFab } from "@/components/AdminUploadFab";
 import { useUserApps } from "@/hooks/useUserApps";
 import { Info, MessageCircle } from "lucide-react";
 
@@ -40,7 +39,6 @@ const Index = () => {
         ))}
       </section>
 
-      <AdminUploadFab />
     </>
   );
 };

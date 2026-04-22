@@ -1,7 +1,6 @@
 import { apps } from "@/data/apps";
 import { AppCard } from "@/components/AppCard";
 import { Header } from "@/components/Header";
-import { AdminUploadFab } from "@/components/AdminUploadFab";
 import { useUserApps } from "@/hooks/useUserApps";
 
 const NewPage = () => {
@@ -15,7 +14,6 @@ const NewPage = () => {
           <AppCard key={a.id} app={a} index={i} />
         ))}
       </div>
-      <AdminUploadFab />
     </>
   );
 };
