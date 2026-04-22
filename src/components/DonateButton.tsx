@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { Copy, Check, Heart, X } from "lucide-react";
 import { GCASH_NUMBER, GCASH_NAME, DONATION_URL } from "@/data/donation";
 
@@ -42,9 +43,9 @@ export const DonateButton = ({
         {label}
       </button>
 
-      {open && (
+      {open && createPortal(
         <div
-          className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-up"
+          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-up"
           onClick={() => setOpen(false)}
         >
           <div
