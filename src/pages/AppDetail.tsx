@@ -1,6 +1,27 @@
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Check, Download, Star } from "lucide-react";
 import { findApp } from "@/data/apps";
+import spotifyShot from "@/assets/screens/spotify.jpg";
+import loktvShot from "@/assets/screens/loktv.jpg";
+import youtubeShot from "@/assets/screens/youtube.jpg";
+import freecineShot from "@/assets/screens/freecine.jpg";
+import capcutAvatars from "@/assets/screens/capcut-avatars.webp";
+import capcutDialogue from "@/assets/screens/capcut-dialogue.webp";
+import capcutStory from "@/assets/screens/capcut-story.webp";
+import gamebase1 from "@/assets/screens/gamebase-1.png";
+import gamebase2 from "@/assets/screens/gamebase-2.png";
+import gamebase3 from "@/assets/screens/gamebase-3.png";
+
+const screenshots: Record<string, string[]> = {
+  "spotify-premium": [spotifyShot],
+  "deezer-premium": [spotifyShot],
+  "loktv": [loktvShot],
+  "youtube-premium": [youtubeShot],
+  "freecine": [freecineShot],
+  "capcut-premium": [capcutAvatars, capcutDialogue, capcutStory],
+  "ai-video-generator": [capcutStory, capcutDialogue, capcutAvatars],
+  "gamebase": [gamebase1, gamebase2, gamebase3],
+};
 
 const AppDetail = () => {
   const { id } = useParams();
@@ -58,6 +79,23 @@ const AppDetail = () => {
           <Download className="w-4 h-4" /> Download APK · {app.size}
         </a>
       </section>
+
+      {screenshots[app.id]?.length ? (
+        <section className="mt-4">
+          <h2 className="font-semibold mb-3 px-1">Screenshots</h2>
+          <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x snap-mandatory scrollbar-none">
+            {screenshots[app.id].map((src, i) => (
+              <img
+                key={i}
+                src={src}
+                alt={`${app.name} screenshot ${i + 1}`}
+                loading="lazy"
+                className="h-72 w-auto rounded-2xl object-cover ring-1 ring-white/15 shadow-lg snap-start shrink-0"
+              />
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section className="glass rounded-3xl p-5 mt-4">
         <h2 className="font-semibold mb-2">About this app</h2>
