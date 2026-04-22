@@ -1,9 +1,12 @@
 import { apps } from "@/data/apps";
 import { AppCard } from "@/components/AppCard";
 import { Header } from "@/components/Header";
+import { AdminUploadFab } from "@/components/AdminUploadFab";
+import { useUserApps } from "@/hooks/useUserApps";
 
 const NewPage = () => {
-  const sorted = [...apps].sort((a, b) => +new Date(b.addedAt) - +new Date(a.addedAt));
+  const { userApps } = useUserApps();
+  const sorted = [...userApps, ...apps].sort((a, b) => +new Date(b.addedAt) - +new Date(a.addedAt));
   return (
     <>
       <Header title="New" subtitle="Freshly uploaded premium apps." />
@@ -12,6 +15,7 @@ const NewPage = () => {
           <AppCard key={a.id} app={a} index={i} />
         ))}
       </div>
+      <AdminUploadFab />
     </>
   );
 };
