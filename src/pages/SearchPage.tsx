@@ -18,7 +18,7 @@ const SearchPage = () => {
         a.tagline.toLowerCase().includes(t) ||
         a.category.toLowerCase().includes(t)
     );
-  }, [q]);
+  }, [q, all]);
 
   return (
     <>
