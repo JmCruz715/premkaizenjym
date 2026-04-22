@@ -134,17 +134,75 @@ const UploadApp = () => {
           </div>
         </div>
 
-        {/* App name */}
+        {/* App name + AI generate */}
         <div>
           <label className="text-xs text-muted-foreground">App name</label>
-          <input
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="e.g. Spotify Premium"
-            className="mt-1 w-full bg-background/40 rounded-xl px-4 py-3 text-sm border border-white/10 outline-none focus:border-white/30"
-          />
+          <div className="mt-1 flex gap-2">
+            <input
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="e.g. Spotify Premium"
+              className="flex-1 bg-background/40 rounded-xl px-4 py-3 text-sm border border-white/10 outline-none focus:border-white/30"
+            />
+            <button
+              type="button"
+              onClick={generate}
+              disabled={generating || !name.trim()}
+              className="liquid-btn liquid-btn-brand tap-press px-3 text-xs font-semibold text-white inline-flex items-center gap-1 shrink-0 disabled:opacity-50"
+            >
+              <Sparkles className="w-4 h-4" />
+              {generating ? "…" : "AI"}
+            </button>
+          </div>
         </div>
+
+        {/* AI-generated preview (editable) */}
+        {(tagline || description || features.length > 0) && (
+          <div className="space-y-3 rounded-2xl border border-white/10 bg-background/30 p-3">
+            <p className="text-[10px] uppercase tracking-wider text-muted-foreground flex items-center gap-1">
+              <Sparkles className="w-3 h-3" /> AI-generated · editable
+            </p>
+            <div>
+              <label className="text-xs text-muted-foreground">Tagline</label>
+              <input
+                value={tagline}
+                onChange={(e) => setTagline(e.target.value)}
+                className="mt-1 w-full bg-background/40 rounded-xl px-3 py-2 text-sm border border-white/10 outline-none focus:border-white/30"
+              />
+            </div>
+            <div>
+              <label className="text-xs text-muted-foreground">Description</label>
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows={4}
+                className="mt-1 w-full bg-background/40 rounded-xl px-3 py-2 text-sm border border-white/10 outline-none focus:border-white/30"
+              />
+            </div>
+            <div>
+              <label className="text-xs text-muted-foreground">Category</label>
+              <input
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="mt-1 w-full bg-background/40 rounded-xl px-3 py-2 text-sm border border-white/10 outline-none focus:border-white/30"
+              />
+            </div>
+            <div>
+              <label className="text-xs text-muted-foreground">Premium features</label>
+              <div className="mt-1 flex flex-wrap gap-1.5">
+                {features.map((f, i) => (
+                  <span key={i} className="text-[11px] bg-white/10 rounded-full px-2 py-1 inline-flex items-center gap-1">
+                    {f}
+                    <button type="button" onClick={() => setFeatures(features.filter((_, j) => j !== i))}>
+                      <X className="w-3 h-3" />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* APK link */}
         <div>
