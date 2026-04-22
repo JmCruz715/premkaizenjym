@@ -105,7 +105,8 @@ export const DonateButton = ({
               <p className="text-[10px] text-muted-foreground mt-4">Thank you for supporting the project ❤️</p>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
