@@ -21,15 +21,23 @@ export const BottomNav = () => {
             to={to}
             end={end as boolean | undefined}
             className={({ isActive }) =>
-              `flex-1 flex flex-col items-center justify-center gap-0.5 py-1.5 rounded-full text-[10px] font-medium transition-all ${
+              `flex-1 flex flex-col items-center justify-center gap-0.5 py-1.5 rounded-full text-[10px] font-medium transition-all duration-300 tap-press ${
                 isActive
-                  ? "liquid-btn liquid-btn-brand text-white"
+                  ? "liquid-btn liquid-btn-brand text-white scale-105"
                   : "text-muted-foreground hover:text-foreground"
               }`
             }
           >
-            <Icon className="w-5 h-5" />
-            <span>{label}</span>
+            {({ isActive }) => (
+              <>
+                <Icon
+                  className={`w-5 h-5 transition-transform duration-300 ${
+                    isActive ? "scale-110" : ""
+                  }`}
+                />
+                <span>{label}</span>
+              </>
+            )}
           </NavLink>
         ))}
       </div>

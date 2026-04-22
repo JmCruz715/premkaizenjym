@@ -5,10 +5,16 @@ import type { App } from "@/data/apps";
 export const AppCard = ({ app, index = 0 }: { app: App; index?: number }) => {
   return (
     <article
-      className="glass rounded-3xl p-4 flex items-center gap-4 animate-fade-up hover:scale-[1.01] transition-transform"
-      style={{ animationDelay: `${index * 60}ms` }}
+      className="reveal ripple glass rounded-3xl p-4 flex items-center gap-4 hover:scale-[1.015] active:scale-[0.985] transition-transform duration-200"
+      style={{ transitionDelay: `${Math.min(index * 40, 240)}ms` }}
+      onPointerDown={(e) => {
+        const t = e.currentTarget as HTMLElement;
+        const r = t.getBoundingClientRect();
+        t.style.setProperty("--rx", `${e.clientX - r.left}px`);
+        t.style.setProperty("--ry", `${e.clientY - r.top}px`);
+      }}
     >
-      <Link to={`/app/${app.id}`} className="shrink-0">
+      <Link to={`/app/${app.id}`} className="shrink-0 tap-press">
         <img
           src={app.icon}
           alt={`${app.name} icon`}
@@ -19,7 +25,7 @@ export const AppCard = ({ app, index = 0 }: { app: App; index?: number }) => {
         />
       </Link>
       <div className="flex-1 min-w-0">
-        <Link to={`/app/${app.id}`} className="block">
+        <Link to={`/app/${app.id}`} className="block tap-press">
           <h3 className="font-semibold text-foreground truncate">{app.name}</h3>
           <p className="text-xs text-muted-foreground truncate">{app.tagline}</p>
           <div className="flex items-center gap-3 mt-1 text-[11px] text-muted-foreground">
