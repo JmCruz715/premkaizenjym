@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, Upload, X, Image as ImageIcon, LogOut } from "lucide-react";
+import { Plus, Upload, X, Image as ImageIcon, LogOut, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Header } from "@/components/Header";
@@ -13,11 +13,37 @@ const UploadApp = () => {
   const nav = useNavigate();
   const { user, isAdmin, loading } = useAuth();
   const [busy, setBusy] = useState(false);
+  const [generating, setGenerating] = useState(false);
 
   const [name, setName] = useState("");
   const [downloadUrl, setDownloadUrl] = useState("");
   const [iconFile, setIconFile] = useState<File | null>(null);
   const [shotFiles, setShotFiles] = useState<File[]>([]);
+  const [tagline, setTagline] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [features, setFeatures] = useState<string[]>([]);
+
+  const generate = async () => {
+    if (!name.trim()) return toast.error("Type the app name first");
+    setGenerating(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-app-description", {
+        body: { name, category },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      setTagline(data.tagline ?? "");
+      setDescription(data.description ?? "");
+      setCategory(data.category ?? category);
+      setFeatures(Array.isArray(data.features) ? data.features : []);
+      toast.success("AI description generated ✨");
+    } catch (err: any) {
+      toast.error(err.message || "Generation failed");
+    } finally {
+      setGenerating(false);
+    }
+  };
 
   useEffect(() => {
     if (!loading && !user) nav("/auth");
