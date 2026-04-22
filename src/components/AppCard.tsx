@@ -1,7 +1,7 @@
-import { Download, Heart, Star } from "lucide-react";
+import { Download, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { App } from "@/data/apps";
-import { DONATION_URL } from "@/data/donation";
+import { DonateButton } from "./DonateButton";
 
 export const AppCard = ({ app, index = 0 }: { app: App; index?: number }) => {
   return (
@@ -49,16 +49,7 @@ export const AppCard = ({ app, index = 0 }: { app: App; index?: number }) => {
           <Download className="w-3.5 h-3.5" />
           Get
         </a>
-        <a
-          href={DONATION_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`Donate to support ${app.name}`}
-          className="liquid-btn tap-press px-3.5 py-2 text-xs font-semibold text-white inline-flex items-center justify-center gap-1.5"
-        >
-          <Heart className="w-3.5 h-3.5 fill-[hsl(350_90%_60%)] text-[hsl(350_90%_60%)]" />
-          Donate
-        </a>
+        <DonateButton className="px-3.5 py-2 text-xs font-semibold" />
       </div>
     </article>
   );
