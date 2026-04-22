@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, Check, Download, Star } from "lucide-react";
+import { ArrowLeft, Check, Download, Heart, Star } from "lucide-react";
 import { findApp } from "@/data/apps";
+import { DONATION_URL } from "@/data/donation";
 import spotifyShot from "@/assets/screens/spotify.jpg";
 import loktvShot from "@/assets/screens/loktv.jpg";
 import youtubeShot from "@/assets/screens/youtube.jpg";
