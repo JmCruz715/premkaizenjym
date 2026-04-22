@@ -1,6 +1,7 @@
-import { Download, Star } from "lucide-react";
+import { Download, Heart, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { App } from "@/data/apps";
+import { DONATION_URL } from "@/data/donation";
 
 export const AppCard = ({ app, index = 0 }: { app: App; index?: number }) => {
   return (
@@ -37,16 +38,28 @@ export const AppCard = ({ app, index = 0 }: { app: App; index?: number }) => {
           </div>
         </Link>
       </div>
-      <a
-        href={app.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`Download ${app.name}`}
-        className="liquid-btn liquid-btn-brand px-4 py-2 text-sm font-semibold text-white inline-flex items-center gap-1.5 shrink-0"
-      >
-        <Download className="w-4 h-4" />
-        Get
-      </a>
+      <div className="flex flex-col gap-1.5 shrink-0">
+        <a
+          href={app.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Download ${app.name}`}
+          className="liquid-btn liquid-btn-brand tap-press px-3.5 py-2 text-xs font-semibold text-white inline-flex items-center justify-center gap-1.5"
+        >
+          <Download className="w-3.5 h-3.5" />
+          Get
+        </a>
+        <a
+          href={DONATION_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Donate to support ${app.name}`}
+          className="liquid-btn tap-press px-3.5 py-2 text-xs font-semibold text-white inline-flex items-center justify-center gap-1.5"
+        >
+          <Heart className="w-3.5 h-3.5 fill-[hsl(350_90%_60%)] text-[hsl(350_90%_60%)]" />
+          Donate
+        </a>
+      </div>
     </article>
   );
 };

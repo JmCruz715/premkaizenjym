@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, Check, Download, Star } from "lucide-react";
+import { ArrowLeft, Check, Download, Heart, Star } from "lucide-react";
 import { findApp } from "@/data/apps";
+import { DONATION_URL } from "@/data/donation";
 import spotifyShot from "@/assets/screens/spotify.jpg";
 import loktvShot from "@/assets/screens/loktv.jpg";
 import youtubeShot from "@/assets/screens/youtube.jpg";
@@ -70,14 +71,24 @@ const AppDetail = () => {
           </div>
         </div>
 
-        <a
-          href={app.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="liquid-btn liquid-btn-brand tap-press mt-5 w-full px-5 py-3 text-sm font-semibold text-white inline-flex items-center justify-center gap-2"
-        >
-          <Download className="w-4 h-4" /> Download APK · {app.size}
-        </a>
+        <div className="mt-5 flex gap-2">
+          <a
+            href={app.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="liquid-btn liquid-btn-brand tap-press flex-1 px-5 py-3 text-sm font-semibold text-white inline-flex items-center justify-center gap-2"
+          >
+            <Download className="w-4 h-4" /> Download · {app.size}
+          </a>
+          <a
+            href={DONATION_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="liquid-btn tap-press px-5 py-3 text-sm font-semibold text-white inline-flex items-center justify-center gap-2"
+          >
+            <Heart className="w-4 h-4 fill-[hsl(350_90%_60%)] text-[hsl(350_90%_60%)]" /> Donate
+          </a>
+        </div>
       </section>
 
       {screenshots[app.id]?.length ? (
