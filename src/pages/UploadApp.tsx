@@ -67,9 +67,34 @@ const UploadApp = () => {
       const screenshots: string[] = [];
       for (const f of shotFiles) screenshots.push(await uploadFile("app-screenshots", f));
 
+      // Auto-generate description if user didn't click AI button
+      let finalTagline = tagline;
+      let finalDesc = description;
+      let finalCat = category || "App";
+      let finalFeats = features;
+      if (!finalDesc) {
+        try {
+          const { data } = await supabase.functions.invoke("generate-app-description", {
+            body: { name, category },
+          });
+          if (data && !data.error) {
+            finalTagline = data.tagline ?? "";
+            finalDesc = data.description ?? "";
+            finalCat = data.category ?? finalCat;
+            finalFeats = Array.isArray(data.features) ? data.features : [];
+          }
+        } catch {
+          // ignore — proceed without AI description
+        }
+      }
+
       const { error } = await supabase.from("user_apps").insert({
         slug: slugify(name) + "-" + Date.now().toString(36),
         name,
+        tagline: finalTagline,
+        description: finalDesc,
+        category: finalCat,
+        features: finalFeats,
         icon_url: iconUrl,
         download_url: downloadUrl,
         screenshots,
