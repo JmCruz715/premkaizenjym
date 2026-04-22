@@ -6,7 +6,6 @@ import { toast } from "sonner";
 
 const Auth = () => {
   const nav = useNavigate();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
@@ -21,27 +20,53 @@ const Auth = () => {
     e.preventDefault();
     setBusy(true);
     try {
-      if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: { emailRedirectTo: `${window.location.origin}/new` },
-        });
-        if (error) throw error;
-        toast.success("Account created. You can sign in now.");
-        setMode("signin");
-      } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-        toast.success("Signed in");
-        nav("/new");
-      }
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      toast.success("Signed in");
+      nav("/upload");
     } catch (err: any) {
-      toast.error(err.message || "Auth failed");
+      toast.error(err.message || "Sign in failed");
     } finally {
       setBusy(false);
     }
   };
+
+  return (
+    <>
+      <Header title="Admin Sign In" subtitle="Restricted to site admins only." />
+      <form onSubmit={submit} className="glass-strong rounded-3xl p-5 space-y-3 animate-fade-up">
+        <input
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          className="w-full bg-background/40 rounded-xl px-4 py-3 text-sm border border-white/10 outline-none focus:border-white/30"
+        />
+        <input
+          type="password"
+          required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          className="w-full bg-background/40 rounded-xl px-4 py-3 text-sm border border-white/10 outline-none focus:border-white/30"
+        />
+        <button
+          type="submit"
+          disabled={busy}
+          className="liquid-btn liquid-btn-brand tap-press w-full px-4 py-3 text-sm font-semibold text-white"
+        >
+          {busy ? "Please wait…" : "Sign In"}
+        </button>
+        <p className="text-[11px] text-muted-foreground text-center pt-2">
+          Sign-up is closed. Only the site owner can sign in here.
+        </p>
+      </form>
+    </>
+  );
+};
+
+export default Auth;
 
   return (
     <>
