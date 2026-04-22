@@ -76,6 +76,7 @@ const AppDetail = () => {
             href={app.url}
             target="_blank"
             rel="noopener noreferrer"
+            download
             className="liquid-btn liquid-btn-brand tap-press flex-1 px-5 py-3 text-sm font-semibold text-white inline-flex items-center justify-center gap-2"
           >
             <Download className="w-4 h-4" /> Download · {app.size}
