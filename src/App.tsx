@@ -12,7 +12,7 @@ import About from "./pages/About.tsx";
 import Contact from "./pages/Contact.tsx";
 import AppDetail from "./pages/AppDetail.tsx";
 import Auth from "./pages/Auth.tsx";
-import UploadApp from "./pages/UploadApp.tsx";
+
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
