@@ -1,4 +1,5 @@
 import aivideo from "@/assets/apps/aivideo.jpeg";
+import tagdubtv from "@/assets/apps/tagdubtv.jpeg";
 import freecine from "@/assets/apps/freecine.jpeg";
 import loktv from "@/assets/apps/loktv.jpeg";
 import youtube from "@/assets/apps/youtube.png";
