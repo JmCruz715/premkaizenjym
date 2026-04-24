@@ -1,4 +1,5 @@
 import aivideo from "@/assets/apps/aivideo.jpeg";
+import tagdubtv from "@/assets/apps/tagdubtv.jpeg";
 import freecine from "@/assets/apps/freecine.jpeg";
 import loktv from "@/assets/apps/loktv.jpeg";
 import youtube from "@/assets/apps/youtube.png";
@@ -25,6 +26,23 @@ export type App = {
 };
 
 export const apps: App[] = [
+  {
+    id: "tagdubtv-tagalog",
+    name: "TagDubTV",
+    tagline: "Tagalog dubbed movies & series, ad-free",
+    description:
+      "Panoorin ang libu-libong pelikula at serye na fully Tagalog dubbed — walang ads, walang bayad. Premium build na may HD streaming, offline downloads, at smooth playback kahit sa mahinang internet. Perfect para sa mga Pinoy na gustong mag-binge ng paborito nilang K-drama, anime, at Hollywood films sa sariling wika.",
+    icon: tagdubtv,
+    version: "1.0.7",
+    size: "28 MB",
+    category: "Streaming",
+    rating: 4.8,
+    downloads: "500K+",
+    addedAt: "2026-04-24",
+    url: "https://www.mediafire.com/file/s01fx7r85a6nsjg/TagdubPH_1.0.7_BienMods.apk/file",
+    features: ["Ad-free streaming", "HD quality unlocked", "Tagalog dubbed library", "Offline downloads", "Lightweight & fast"],
+    accent: "from-rose-500 to-orange-500",
+  },
   {
     id: "ai-video-generator",
     name: "AI Video Generator",

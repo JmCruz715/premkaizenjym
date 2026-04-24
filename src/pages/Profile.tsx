@@ -1,11 +1,9 @@
-import { Facebook, MessageCircle, Info, BadgeCheck, Plus } from "lucide-react";
+import { Facebook, MessageCircle, Info, BadgeCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
-import { useAuth } from "@/hooks/useAuth";
 import kaizen from "@/assets/kaizen.jpg";
 
 const Profile = () => {
-  const { user } = useAuth();
   return (
     <>
       <Header title="Profile" subtitle="Meet the creator of Kaizen Apps." />
@@ -63,13 +61,6 @@ const Profile = () => {
           </Link>
         </div>
 
-        <Link
-          to={user ? "/upload" : "/auth"}
-          aria-label="Add new app"
-          className="mt-5 liquid-btn liquid-btn-brand tap-press w-full px-4 py-3 text-sm font-semibold text-white inline-flex items-center justify-center gap-2"
-        >
-          <Plus className="w-5 h-5" /> Add new app
-        </Link>
 
         <div className="grid grid-cols-3 gap-3 mt-6 text-center">
           <div className="glass rounded-2xl py-3 reveal tap-press">
