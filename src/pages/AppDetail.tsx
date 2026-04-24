@@ -27,9 +27,18 @@ const screenshots: Record<string, string[]> = {
 
 const AppDetail = () => {
   const { id } = useParams();
-  const { userApps, screenshots: userShots } = useUserApps();
+  const { userApps, screenshots: userShots, loading } = useUserApps();
   const app = findApp(id || "") || userApps.find((a) => a.id === id);
   const allShots = { ...screenshots, ...userShots };
+
+  if (loading && !app) {
+    return (
+      <div className="text-center py-20">
+        <div className="inline-block w-8 h-8 rounded-full border-2 border-white/20 border-t-white animate-spin" />
+        <p className="text-muted-foreground text-sm mt-3">Loading app…</p>
+      </div>
+    );
+  }
 
   if (!app) {
     return (
