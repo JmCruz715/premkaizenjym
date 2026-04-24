@@ -1,11 +1,9 @@
-import { Facebook, MessageCircle, Info, BadgeCheck, Plus } from "lucide-react";
+import { Facebook, MessageCircle, Info, BadgeCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
-import { useAuth } from "@/hooks/useAuth";
 import kaizen from "@/assets/kaizen.jpg";
 
 const Profile = () => {
-  const { user } = useAuth();
   return (
     <>
       <Header title="Profile" subtitle="Meet the creator of Kaizen Apps." />
