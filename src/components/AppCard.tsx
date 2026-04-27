@@ -1,10 +1,18 @@
-import { Download, Star } from "lucide-react";
+import { Download, Eye, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { App } from "@/data/apps";
 import { DonateButton } from "./DonateButton";
 import { triggerDownload } from "@/lib/download";
+import { useAppStats } from "@/hooks/useAppStats";
+
+const fmt = (n: number) => {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`;
+  return String(n);
+};
 
 export const AppCard = ({ app, index = 0 }: { app: App; index?: number }) => {
+  const { installs, views } = useAppStats(app.id);
   return (
     <article
       className="reveal ripple glass rounded-3xl p-4 flex items-center gap-4 hover:scale-[1.015] active:scale-[0.985] transition-transform duration-200"
@@ -30,12 +38,17 @@ export const AppCard = ({ app, index = 0 }: { app: App; index?: number }) => {
         <Link to={`/app/${app.id}`} className="block tap-press">
           <h3 className="font-semibold text-foreground truncate">{app.name}</h3>
           <p className="text-xs text-muted-foreground truncate">{app.tagline}</p>
-          <div className="flex items-center gap-3 mt-1 text-[11px] text-muted-foreground">
+          <div className="flex items-center gap-2.5 mt-1 text-[11px] text-muted-foreground flex-wrap">
             <span className="flex items-center gap-1">
               <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" /> {app.rating}
             </span>
-            <span>{app.size}</span>
-            <span className="truncate">{app.category}</span>
+            <span className="flex items-center gap-1" title="Installs">
+              <Download className="w-3 h-3" /> {fmt(installs)}
+            </span>
+            <span className="flex items-center gap-1" title="Views">
+              <Eye className="w-3 h-3" /> {fmt(views)}
+            </span>
+            <span className="truncate opacity-70">{app.category}</span>
           </div>
         </Link>
       </div>
@@ -46,7 +59,7 @@ export const AppCard = ({ app, index = 0 }: { app: App; index?: number }) => {
           rel="noopener noreferrer"
           onClick={(e) => {
             e.preventDefault();
-            triggerDownload(app.url, `${app.name}.apk`);
+            triggerDownload(app.url, `${app.name}.apk`, app.id);
           }}
           aria-label={`Download ${app.name}`}
           className="liquid-btn liquid-btn-brand tap-press px-3.5 py-2 text-xs font-semibold text-white inline-flex items-center justify-center gap-1.5"

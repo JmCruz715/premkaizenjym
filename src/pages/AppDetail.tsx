@@ -1,9 +1,17 @@
+import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, Check, Download, Star } from "lucide-react";
+import { ArrowLeft, Check, Download, Eye, Star } from "lucide-react";
 import { findApp } from "@/data/apps";
 import { DonateButton } from "@/components/DonateButton";
 import { useUserApps } from "@/hooks/useUserApps";
 import { triggerDownload } from "@/lib/download";
+import { useAppStats, trackView } from "@/hooks/useAppStats";
+
+const fmt = (n: number) => {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`;
+  return String(n);
+};
 import spotifyShot from "@/assets/screens/spotify.jpg";
 import loktvShot from "@/assets/screens/loktv.jpg";
 import youtubeShot from "@/assets/screens/youtube.jpg";
@@ -31,6 +39,12 @@ const AppDetail = () => {
   const { userApps, screenshots: userShots, loading } = useUserApps();
   const app = findApp(id || "") || userApps.find((a) => a.id === id);
   const allShots = { ...screenshots, ...userShots };
+  const { installs, views, refresh } = useAppStats(app?.id);
+
+  // Bump local view counter once when this app's detail page mounts.
+  useEffect(() => {
+    if (app?.id) trackView(app.id);
+  }, [app?.id]);
 
   if (loading && !app) {
     return (
@@ -74,11 +88,16 @@ const AppDetail = () => {
           <div className="min-w-0">
             <h1 className="text-2xl font-bold">{app.name}</h1>
             <p className="text-xs text-muted-foreground">{app.tagline}</p>
-            <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
+            <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground flex-wrap">
               <span className="flex items-center gap-1">
                 <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" /> {app.rating}
               </span>
-              <span>{app.downloads}</span>
+              <span className="flex items-center gap-1" title="Real installs">
+                <Download className="w-3.5 h-3.5" /> {fmt(installs)}
+              </span>
+              <span className="flex items-center gap-1" title="Page views">
+                <Eye className="w-3.5 h-3.5" /> {fmt(views)}
+              </span>
               <span>v{app.version}</span>
             </div>
           </div>
@@ -91,7 +110,9 @@ const AppDetail = () => {
             rel="noopener noreferrer"
             onClick={(e) => {
               e.preventDefault();
-              triggerDownload(app.url, `${app.name}.apk`);
+              triggerDownload(app.url, `${app.name}.apk`, app.id);
+              // Optimistically refresh stats shortly after click
+              setTimeout(() => refresh(), 1500);
             }}
             className="liquid-btn liquid-btn-brand tap-press flex-1 px-5 py-3 text-sm font-semibold text-white inline-flex items-center justify-center gap-2"
           >
