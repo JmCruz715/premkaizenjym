@@ -2,3 +2,6 @@ project_id = "ptolqesoisvnajvzxtle"
 
 [functions.generate-app-description]
 verify_jwt = false
+
+[functions.mediafire-direct]
+verify_jwt = false

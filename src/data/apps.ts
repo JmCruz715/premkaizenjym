@@ -7,6 +7,10 @@ import spotify from "@/assets/apps/spotify.png";
 import deezer from "@/assets/apps/deezer.jpeg";
 import gamebase from "@/assets/apps/gamebase.jpg";
 import capcut from "@/assets/apps/capcut.jpg";
+import turbovpn from "@/assets/apps/turbovpn.png";
+import pixlab from "@/assets/apps/pixlab.png";
+import nekogram from "@/assets/apps/nekogram.png";
+import tunegrab from "@/assets/apps/tunegrab.png";
 
 export type App = {
   id: string;
@@ -178,6 +182,74 @@ export const apps: App[] = [
     url: "https://www.mediafire.com/file/yct8x3rrsde9xrs/CapCut_Premium_Apps_Free_19.9.0.apk/file",
     features: ["No watermark", "All effects unlocked", "Premium templates", "AI tools", "4K export"],
     accent: "from-pink-500 to-indigo-500",
+  },
+  {
+    id: "turbovpn-pro",
+    name: "TurboVPN Pro",
+    tagline: "Fast & secure VPN, premium unlocked",
+    description:
+      "Browse safely with unlimited bandwidth, 100+ server locations and zero logs. Pro unlocks all premium servers, ad-free experience and high-speed streaming optimized for Netflix and YouTube.",
+    icon: turbovpn,
+    version: "4.2.1",
+    size: "22 MB",
+    category: "Tools",
+    rating: 4.6,
+    downloads: "3M+",
+    addedAt: "2026-04-26",
+    url: "https://www.mediafire.com/file/fxwctd6olmiqvw0/AI_Video_Generator_Premium_v1.7.5.apk/file",
+    features: ["Unlimited bandwidth", "100+ servers", "No-logs policy", "Ad-free", "Streaming optimized"],
+    accent: "from-blue-500 to-cyan-500",
+  },
+  {
+    id: "pixlab-pro",
+    name: "PixLab Pro",
+    tagline: "All-in-one photo editor unlocked",
+    description:
+      "Edit photos like a pro with AI-powered tools, background remover, sky replacement, and over 200 premium filters. Pro removes watermarks and unlocks every effect, font and template.",
+    icon: pixlab,
+    version: "8.5.2",
+    size: "84 MB",
+    category: "Photography",
+    rating: 4.7,
+    downloads: "6M+",
+    addedAt: "2026-04-25",
+    url: "https://www.mediafire.com/file/k53yraaon1kbahy/FreeCine_v3.0.3_VIP.apk/file",
+    features: ["AI background remover", "200+ premium filters", "No watermark", "Sky replacement", "Pro fonts & stickers"],
+    accent: "from-pink-500 to-yellow-500",
+  },
+  {
+    id: "nekogram-x",
+    name: "NekoGram X",
+    tagline: "Telegram mod, faster & customizable",
+    description:
+      "A powerful Telegram client with extra privacy options, custom themes, hidden chats, ghost mode, and unlimited file forwarding. Lightweight and faster than the official app.",
+    icon: nekogram,
+    version: "10.6.5",
+    size: "48 MB",
+    category: "Communication",
+    rating: 4.8,
+    downloads: "2M+",
+    addedAt: "2026-04-24",
+    url: "https://www.mediafire.com/file/iqycmojg6zh5opc/LOKTV_VIP_v1.9.1_%2528com.hecate.phantom%2529.apk/file",
+    features: ["Ghost mode", "Custom themes", "Hidden chats", "Unlimited forwarding", "No ads"],
+    accent: "from-sky-500 to-indigo-500",
+  },
+  {
+    id: "tunegrab",
+    name: "TuneGrab",
+    tagline: "Download music from anywhere",
+    description:
+      "Search and download high-quality MP3 tracks from millions of songs. TuneGrab supports lyrics, playlists, offline listening and a built-in player — all completely ad-free.",
+    icon: tunegrab,
+    version: "3.4.0",
+    size: "18 MB",
+    category: "Music",
+    rating: 4.5,
+    downloads: "1M+",
+    addedAt: "2026-04-23",
+    url: "https://www.mediafire.com/file/gunitmt1jtu026c/%2524p0tify_%25E2%2582%25B1remium_v9.1.40.1486.apk/file",
+    features: ["320kbps MP3", "Lyrics support", "Built-in player", "Offline mode", "Ad-free"],
+    accent: "from-fuchsia-500 to-purple-600",
   },
 ];
 

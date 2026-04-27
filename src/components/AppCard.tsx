@@ -2,6 +2,7 @@ import { Download, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { App } from "@/data/apps";
 import { DonateButton } from "./DonateButton";
+import { triggerDownload } from "@/lib/download";
 
 export const AppCard = ({ app, index = 0 }: { app: App; index?: number }) => {
   return (
@@ -43,7 +44,10 @@ export const AppCard = ({ app, index = 0 }: { app: App; index?: number }) => {
           href={app.url}
           target="_blank"
           rel="noopener noreferrer"
-          download
+          onClick={(e) => {
+            e.preventDefault();
+            triggerDownload(app.url, `${app.name}.apk`);
+          }}
           aria-label={`Download ${app.name}`}
           className="liquid-btn liquid-btn-brand tap-press px-3.5 py-2 text-xs font-semibold text-white inline-flex items-center justify-center gap-1.5"
         >
