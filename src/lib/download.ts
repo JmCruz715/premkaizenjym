@@ -1,7 +1,6 @@
 // Auto-download helper. For MediaFire links we route through an edge function
 // that resolves the direct download URL and 302-redirects to the APK.
-import { SUPABASE_URL } from "@/integrations/supabase/client";
-
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const FN_URL = `${SUPABASE_URL}/functions/v1/mediafire-direct`;
 
 export function getDownloadUrl(url: string): string {
