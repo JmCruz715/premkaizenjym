@@ -14,6 +14,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      app_stats: {
+        Row: {
+          installs: number
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          installs?: number
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          installs?: number
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_apps: {
         Row: {
           accent: string
@@ -110,6 +128,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      increment_install: { Args: { _slug: string }; Returns: number }
     }
     Enums: {
       app_role: "admin" | "user"
