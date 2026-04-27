@@ -1,9 +1,17 @@
+import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, Check, Download, Star } from "lucide-react";
+import { ArrowLeft, Check, Download, Eye, Star } from "lucide-react";
 import { findApp } from "@/data/apps";
 import { DonateButton } from "@/components/DonateButton";
 import { useUserApps } from "@/hooks/useUserApps";
 import { triggerDownload } from "@/lib/download";
+import { useAppStats, trackView } from "@/hooks/useAppStats";
+
+const fmt = (n: number) => {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`;
+  return String(n);
+};
 import spotifyShot from "@/assets/screens/spotify.jpg";
 import loktvShot from "@/assets/screens/loktv.jpg";
 import youtubeShot from "@/assets/screens/youtube.jpg";
@@ -31,6 +39,12 @@ const AppDetail = () => {
   const { userApps, screenshots: userShots, loading } = useUserApps();
   const app = findApp(id || "") || userApps.find((a) => a.id === id);
   const allShots = { ...screenshots, ...userShots };
+  const { installs, views, refresh } = useAppStats(app?.id);
+
+  // Bump local view counter once when this app's detail page mounts.
+  useEffect(() => {
+    if (app?.id) trackView(app.id);
+  }, [app?.id]);
 
   if (loading && !app) {
     return (
