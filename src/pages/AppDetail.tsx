@@ -3,6 +3,7 @@ import { ArrowLeft, Check, Download, Star } from "lucide-react";
 import { findApp } from "@/data/apps";
 import { DonateButton } from "@/components/DonateButton";
 import { useUserApps } from "@/hooks/useUserApps";
+import { triggerDownload } from "@/lib/download";
 import spotifyShot from "@/assets/screens/spotify.jpg";
 import loktvShot from "@/assets/screens/loktv.jpg";
 import youtubeShot from "@/assets/screens/youtube.jpg";
@@ -88,7 +89,10 @@ const AppDetail = () => {
             href={app.url}
             target="_blank"
             rel="noopener noreferrer"
-            download
+            onClick={(e) => {
+              e.preventDefault();
+              triggerDownload(app.url, `${app.name}.apk`);
+            }}
             className="liquid-btn liquid-btn-brand tap-press flex-1 px-5 py-3 text-sm font-semibold text-white inline-flex items-center justify-center gap-2"
           >
             <Download className="w-4 h-4" /> Download · {app.size}
