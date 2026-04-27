@@ -88,11 +88,16 @@ const AppDetail = () => {
           <div className="min-w-0">
             <h1 className="text-2xl font-bold">{app.name}</h1>
             <p className="text-xs text-muted-foreground">{app.tagline}</p>
-            <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
+            <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground flex-wrap">
               <span className="flex items-center gap-1">
                 <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" /> {app.rating}
               </span>
-              <span>{app.downloads}</span>
+              <span className="flex items-center gap-1" title="Real installs">
+                <Download className="w-3.5 h-3.5" /> {fmt(installs)}
+              </span>
+              <span className="flex items-center gap-1" title="Page views">
+                <Eye className="w-3.5 h-3.5" /> {fmt(views)}
+              </span>
               <span>v{app.version}</span>
             </div>
           </div>
@@ -105,7 +110,9 @@ const AppDetail = () => {
             rel="noopener noreferrer"
             onClick={(e) => {
               e.preventDefault();
-              triggerDownload(app.url, `${app.name}.apk`);
+              triggerDownload(app.url, `${app.name}.apk`, app.id);
+              // Optimistically refresh stats shortly after click
+              setTimeout(() => refresh(), 1500);
             }}
             className="liquid-btn liquid-btn-brand tap-press flex-1 px-5 py-3 text-sm font-semibold text-white inline-flex items-center justify-center gap-2"
           >
