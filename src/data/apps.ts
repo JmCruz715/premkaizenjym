@@ -11,6 +11,12 @@ import turbovpn from "@/assets/apps/turbovpn.png";
 import pixlab from "@/assets/apps/pixlab.png";
 import nekogram from "@/assets/apps/nekogram.png";
 import tunegrab from "@/assets/apps/tunegrab.png";
+import subwayrun from "@/assets/apps/subwayrun.png";
+import stickhero from "@/assets/apps/stickhero.png";
+import towerdefense from "@/assets/apps/towerdefense.png";
+import driftlegends from "@/assets/apps/driftlegends.png";
+import shadowknight from "@/assets/apps/shadowknight.png";
+import blockcraft from "@/assets/apps/blockcraft.png";
 
 export type App = {
   id: string;
@@ -250,6 +256,109 @@ export const apps: App[] = [
     url: "https://www.mediafire.com/file/gunitmt1jtu026c/%2524p0tify_%25E2%2582%25B1remium_v9.1.40.1486.apk/file",
     features: ["320kbps MP3", "Lyrics support", "Built-in player", "Offline mode", "Ad-free"],
     accent: "from-fuchsia-500 to-purple-600",
+  },
+  // ─── Offline modded games ─────────────────────────────────────────────
+  {
+    id: "subway-run-mod",
+    name: "Subway Run MOD",
+    tagline: "Endless runner · unlimited coins & keys",
+    description:
+      "Tumakbo nang walang katapusan sa subway tracks ng buong mundo. MOD version na may unlimited coins, keys, at lahat ng characters/hoverboards naka-unlock. 100% offline — walang ads, walang in-app purchase.",
+    icon: subwayrun,
+    version: "3.18.2",
+    size: "156 MB",
+    category: "Games",
+    rating: 4.7,
+    downloads: "1B+",
+    addedAt: "2026-04-27",
+    url: "https://www.mediafire.com/file/i1ikjc5ixopggt6/GameBase+_april15.apk/file",
+    features: ["Unlimited coins", "Unlimited keys", "All characters unlocked", "All boards unlocked", "100% offline"],
+    accent: "from-orange-500 to-red-500",
+  },
+  {
+    id: "stick-hero-mod",
+    name: "Stick Hero MOD",
+    tagline: "Stickman action RPG · god mode",
+    description:
+      "Epic stickman warrior battles with smooth combos and devastating combos. MOD unlocks god mode, one-hit kill, unlimited gems and all weapons. Fully offline kaya pwedeng laruin kahit walang internet.",
+    icon: stickhero,
+    version: "1.6.4",
+    size: "98 MB",
+    category: "Games",
+    rating: 4.6,
+    downloads: "50M+",
+    addedAt: "2026-04-27",
+    url: "https://www.mediafire.com/file/i1ikjc5ixopggt6/GameBase+_april15.apk/file",
+    features: ["God mode", "One-hit kill", "Unlimited gems", "All weapons unlocked", "Offline play"],
+    accent: "from-indigo-500 to-purple-600",
+  },
+  {
+    id: "tower-defense-pro",
+    name: "Tower Defense Pro MOD",
+    tagline: "Pop balloons · all towers unlocked",
+    description:
+      "Strategic tower defense kung saan pop-popin mo ang lahat ng balloons. MOD version with unlimited monkey money, all heroes unlocked, and free upgrades. Pure offline gameplay para makapag-grind kahit walang signal.",
+    icon: towerdefense,
+    version: "40.3",
+    size: "112 MB",
+    category: "Games",
+    rating: 4.8,
+    downloads: "10M+",
+    addedAt: "2026-04-27",
+    url: "https://www.mediafire.com/file/i1ikjc5ixopggt6/GameBase+_april15.apk/file",
+    features: ["Unlimited money", "All heroes unlocked", "Free upgrades", "All maps", "Offline mode"],
+    accent: "from-green-500 to-lime-500",
+  },
+  {
+    id: "drift-legends",
+    name: "Drift Legends MOD",
+    tagline: "Realistic drifting · all cars unlocked",
+    description:
+      "Karera at drift sa pinakamagagandang sports cars. MOD nagbibigay ng unlimited money, all cars at tracks unlocked, no ads, at premium upgrades nang libre. Single-player mode kaya offline-friendly.",
+    icon: driftlegends,
+    version: "1.9.6",
+    size: "245 MB",
+    category: "Games",
+    rating: 4.5,
+    downloads: "5M+",
+    addedAt: "2026-04-27",
+    url: "https://www.mediafire.com/file/i1ikjc5ixopggt6/GameBase+_april15.apk/file",
+    features: ["Unlimited money", "All cars unlocked", "All tracks", "Free upgrades", "No ads"],
+    accent: "from-pink-500 to-rose-600",
+  },
+  {
+    id: "shadow-knight-rpg",
+    name: "Shadow Knight RPG MOD",
+    tagline: "Dark fantasy action RPG · mega menu",
+    description:
+      "Pumasok sa mundo ng shadow knights at lumaban sa mga demonyo. MOD may mega menu — god mode, unlimited mana, one-hit kill, free shopping at all skins unlocked. Pwedeng laruin offline.",
+    icon: shadowknight,
+    version: "3.24.110",
+    size: "188 MB",
+    category: "Games",
+    rating: 4.7,
+    downloads: "20M+",
+    addedAt: "2026-04-27",
+    url: "https://www.mediafire.com/file/i1ikjc5ixopggt6/GameBase+_april15.apk/file",
+    features: ["Mega menu", "God mode", "One-hit kill", "Free shopping", "All skins unlocked"],
+    accent: "from-red-600 to-purple-700",
+  },
+  {
+    id: "block-craft-world",
+    name: "Block Craft World MOD",
+    tagline: "Sandbox builder · unlimited resources",
+    description:
+      "Mag-build ng kahit anong gusto mo sa infinite blocky world. MOD bersyon may unlimited resources, all blocks unlocked, premium skins libre, at survival mode na walang hunger. Fully offline sandbox fun.",
+    icon: blockcraft,
+    version: "2.6.18",
+    size: "135 MB",
+    category: "Games",
+    rating: 4.6,
+    downloads: "100M+",
+    addedAt: "2026-04-27",
+    url: "https://www.mediafire.com/file/i1ikjc5ixopggt6/GameBase+_april15.apk/file",
+    features: ["Unlimited resources", "All blocks unlocked", "Premium skins free", "No hunger", "Creative + survival"],
+    accent: "from-sky-500 to-emerald-500",
   },
 ];
 

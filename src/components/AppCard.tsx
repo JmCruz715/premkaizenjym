@@ -1,10 +1,18 @@
-import { Download, Star } from "lucide-react";
+import { Download, Eye, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { App } from "@/data/apps";
 import { DonateButton } from "./DonateButton";
 import { triggerDownload } from "@/lib/download";
+import { useAppStats } from "@/hooks/useAppStats";
+
+const fmt = (n: number) => {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`;
+  return String(n);
+};
 
 export const AppCard = ({ app, index = 0 }: { app: App; index?: number }) => {
+  const { installs, views } = useAppStats(app.id);
   return (
     <article
       className="reveal ripple glass rounded-3xl p-4 flex items-center gap-4 hover:scale-[1.015] active:scale-[0.985] transition-transform duration-200"
