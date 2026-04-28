@@ -1,4 +1,4 @@
-import { Facebook, MessageCircle, Info, BadgeCheck, Sparkles, TrendingUp } from "lucide-react";
+import { Facebook, MessageCircle, Info, Check, Sparkles, TrendingUp, Heart, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { apps } from "@/data/apps";
@@ -27,13 +27,14 @@ const Profile = () => {
         <div className="absolute -top-20 -left-16 w-56 h-56 rounded-full bg-gradient-to-br from-fuchsia-500 to-blue-500 opacity-25 blur-3xl pointer-events-none" />
         <div className="absolute -bottom-24 -right-20 w-64 h-64 rounded-full bg-gradient-to-br from-orange-500 to-pink-500 opacity-20 blur-3xl pointer-events-none" />
 
-        <div className="relative w-28 h-28 mx-auto">
+        <div className="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto animate-float">
           <div className="absolute inset-0 rounded-full p-[3px] bg-[image:var(--gradient-brand)] animate-pop-in">
+            <div className="absolute inset-[-6px] rounded-full bg-[conic-gradient(from_0deg,hsl(280_90%_60%/.6),transparent_30%,hsl(220_95%_60%/.6),transparent_70%,hsl(350_90%_60%/.6))] blur-md animate-spin-slow -z-10" />
             <img
               src={kaizen}
               alt="Kaizen avatar"
-              width={112}
-              height={112}
+              width={128}
+              height={128}
               className="w-full h-full rounded-full object-cover bg-background"
             />
           </div>
@@ -44,9 +45,11 @@ const Profile = () => {
           />
         </div>
 
-        <div className="mt-4 flex items-center justify-center gap-1.5 relative">
-          <h2 className="text-2xl font-bold">Kaizen</h2>
-          <BadgeCheck className="w-6 h-6 fill-[hsl(210_90%_55%)] text-white" aria-label="Verified" />
+        <div className="mt-4 flex items-center justify-center gap-2 relative">
+          <h2 className="text-2xl sm:text-3xl font-bold">Kaizen</h2>
+          <span className="verified-badge" aria-label="Verified" title="Verified creator">
+            <Check strokeWidth={3.5} />
+          </span>
         </div>
         <p className="text-xs text-muted-foreground mt-1 relative">Creator · Developer · APK curator</p>
 
@@ -106,18 +109,26 @@ const Profile = () => {
       </section>
 
       {/* Achievement strip */}
-      <section className="grid grid-cols-3 gap-2 mt-3 reveal">
-        <div className="glass rounded-2xl p-3 text-center">
-          <Sparkles className="w-4 h-4 mx-auto text-yellow-400" />
+      <section className="grid grid-cols-3 sm:grid-cols-5 gap-2 mt-3 reveal">
+        <div className="glass rounded-2xl p-3 text-center tap-press">
+          <Sparkles className="w-5 h-5 mx-auto text-yellow-400 animate-float" />
           <p className="text-[10px] uppercase tracking-wider text-muted-foreground mt-1">Verified</p>
         </div>
-        <div className="glass rounded-2xl p-3 text-center">
-          <BadgeCheck className="w-4 h-4 mx-auto text-blue-400" />
+        <div className="glass rounded-2xl p-3 text-center tap-press">
+          <Check className="w-5 h-5 mx-auto text-blue-400 animate-float" style={{ animationDelay: "0.5s" }} />
           <p className="text-[10px] uppercase tracking-wider text-muted-foreground mt-1">Curator</p>
         </div>
-        <div className="glass rounded-2xl p-3 text-center">
-          <TrendingUp className="w-4 h-4 mx-auto text-emerald-400" />
+        <div className="glass rounded-2xl p-3 text-center tap-press">
+          <TrendingUp className="w-5 h-5 mx-auto text-emerald-400 animate-float" style={{ animationDelay: "1s" }} />
           <p className="text-[10px] uppercase tracking-wider text-muted-foreground mt-1">Trending</p>
+        </div>
+        <div className="glass rounded-2xl p-3 text-center tap-press">
+          <Heart className="w-5 h-5 mx-auto text-rose-400 animate-float" style={{ animationDelay: "1.5s" }} />
+          <p className="text-[10px] uppercase tracking-wider text-muted-foreground mt-1">Loved</p>
+        </div>
+        <div className="glass rounded-2xl p-3 text-center tap-press">
+          <Zap className="w-5 h-5 mx-auto text-amber-400 animate-float" style={{ animationDelay: "2s" }} />
+          <p className="text-[10px] uppercase tracking-wider text-muted-foreground mt-1">Fast</p>
         </div>
       </section>
     </>
