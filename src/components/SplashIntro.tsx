@@ -14,7 +14,7 @@ export const SplashIntro = () => {
   useEffect(() => {
     if (!show) return;
     sessionStorage.setItem("kaizen-intro-played", "1");
-    const t = setTimeout(() => setShow(false), 2600);
+    const t = setTimeout(() => setShow(false), 4000);
     return () => clearTimeout(t);
   }, [show]);
 
@@ -26,6 +26,8 @@ export const SplashIntro = () => {
       <div className="absolute inset-0 splash-spotlight" />
       {/* radial brand glow */}
       <div className="absolute inset-0 splash-glow" />
+      {/* sparkle particles */}
+      <div className="splash-particles" />
 
       {/* The K */}
       <div className="relative">
