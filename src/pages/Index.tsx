@@ -148,9 +148,11 @@ const Index = () => {
                 </div>
                 <span className="text-xs text-muted-foreground">{list.length} apps</span>
               </div>
-              {list.map((app, i) => (
-                <AppCard key={app.id} app={app} index={i} />
-              ))}
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+                {list.map((app, i) => (
+                  <AppCard key={app.id} app={app} index={i} />
+                ))}
+              </div>
             </section>
           );
         })}
