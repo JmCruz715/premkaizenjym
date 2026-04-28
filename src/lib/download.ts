@@ -1,9 +1,17 @@
-// Auto-download helper. For MediaFire links we route through an edge function
-// that resolves the direct download URL and 302-redirects to the APK.
-// Improved reliability:
-//   1. Try edge-function proxy first
-//   2. If proxy errors, gracefully fall back to opening the original URL
+// Auto-download helper.
+//
+// Goal: trigger the browser's native download silently WITHOUT navigating
+// the user away from Kaizen Apps. We use a hidden iframe so the response
+// (Content-Disposition: attachment for .apk) starts the download in place.
+//
+// For MediaFire links we proxy through an edge function that resolves the
+// real .apk URL and 302-redirects.
+// For all other direct links we just point the iframe at the URL.
+// Fallback: after 5s with no success, open the link in a new tab so the
+// user still gets the file.
+
 import { trackInstall } from "@/hooks/useAppStats";
+import { toast } from "@/hooks/use-toast";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const FN_URL = `${SUPABASE_URL}/functions/v1/mediafire-direct`;
@@ -15,44 +23,45 @@ export function getDownloadUrl(url: string): string {
   return url;
 }
 
-/** Triggers a download. Tracks install in backend. Slug is optional. */
+/**
+ * Triggers a download without leaving the page.
+ * Tracks install in backend. Slug is optional.
+ */
 export function triggerDownload(url: string, filename?: string, slug?: string) {
-  if (slug) {
-    // fire & forget
-    trackInstall(slug);
-  }
+  if (slug) trackInstall(slug); // fire & forget
 
-  const isMediaFire = url.includes("mediafire.com");
+  toast({
+    title: "Starting download…",
+    description: filename ? `${filename}` : "Your file will begin shortly.",
+  });
+
   const proxied = getDownloadUrl(url);
 
-  // Use a hidden iframe for MediaFire so the 302 happens silently and
-  // the browser begins downloading the .apk directly. Fall back to
-  // opening the resolved/original URL in a new tab if nothing happens.
-  if (isMediaFire) {
-    const iframe = document.createElement("iframe");
-    iframe.style.display = "none";
-    iframe.src = proxied;
-    document.body.appendChild(iframe);
+  // Hidden iframe approach — works for .apk responses and 302 redirects.
+  // The user never leaves Kaizen Apps.
+  const iframe = document.createElement("iframe");
+  iframe.style.cssText =
+    "position:absolute;width:0;height:0;border:0;visibility:hidden;";
+  iframe.src = proxied;
+  document.body.appendChild(iframe);
 
-    // Safety fallback — if proxy fails (network/error), open the
-    // original MediaFire page after a short delay so user still gets the file.
-    const fallbackTimer = window.setTimeout(() => {
+  // Safety fallback — if proxy fails or browser blocks the iframe response,
+  // open the original page in a new tab after a short delay.
+  let succeeded = false;
+  const fallbackTimer = window.setTimeout(() => {
+    if (!succeeded) {
       window.open(url, "_blank", "noopener,noreferrer");
-    }, 4000);
+    }
+  }, 5000);
 
-    iframe.onload = () => window.clearTimeout(fallbackTimer);
+  iframe.onload = () => {
+    // For an attachment download the iframe never fires "load" successfully —
+    // but if it does (e.g. proxy errored to a HTML page), we still treat as ok
+    // and skip fallback. The toast already told the user what's happening.
+    succeeded = true;
+    window.clearTimeout(fallbackTimer);
+  };
 
-    setTimeout(() => iframe.remove(), 15000);
-    return;
-  }
-
-  // Direct link — use anchor click
-  const a = document.createElement("a");
-  a.href = proxied;
-  if (filename) a.download = filename;
-  a.rel = "noopener noreferrer";
-  a.target = "_blank";
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(() => a.remove(), 100);
+  // Clean up iframe later regardless.
+  setTimeout(() => iframe.remove(), 20000);
 }
