@@ -17,6 +17,13 @@ import towerdefense from "@/assets/apps/towerdefense.png";
 import driftlegends from "@/assets/apps/driftlegends.png";
 import shadowknight from "@/assets/apps/shadowknight.png";
 import blockcraft from "@/assets/apps/blockcraft.png";
+import discord from "@/assets/apps/discord.png";
+import instagram from "@/assets/apps/instagram.png";
+import tiktok from "@/assets/apps/tiktok.png";
+import asphalt from "@/assets/apps/asphalt.png";
+import candyblast from "@/assets/apps/candyblast.png";
+import sniper from "@/assets/apps/sniper.png";
+import messenger from "@/assets/apps/messenger.png";
 
 export type App = {
   id: string;
