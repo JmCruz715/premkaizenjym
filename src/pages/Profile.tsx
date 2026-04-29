@@ -1,4 +1,4 @@
-import { Facebook, MessageCircle, Info, Check, Sparkles, TrendingUp, Heart, Zap, Globe, MapPin, Calendar, Code2, Music, Coffee, ExternalLink, Mail, Share2 } from "lucide-react";
+import { Facebook, MessageCircle, Info, Check, Sparkles, TrendingUp, Heart, Zap, Globe, MapPin, Calendar, Code2, Music, ExternalLink, Share2, Flame, Download } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { apps } from "@/data/apps";
