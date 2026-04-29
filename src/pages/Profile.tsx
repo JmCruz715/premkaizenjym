@@ -78,7 +78,35 @@ const Profile = () => {
         </div>
       </section>
 
-      {/* ───── Live stats ───── */}
+      {/* ───── Featured drop (moved from home) ───── */}
+      <section className="mt-3 reveal">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5 mb-2 px-1">
+          <Flame className="w-3.5 h-3.5" /> Featured Drop
+        </h3>
+        <div className="glass-strong rounded-3xl p-5 relative overflow-hidden animate-fade-up">
+          <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-[hsl(280_90%_60%/0.45)] blur-2xl" />
+          <div className="absolute -bottom-12 -left-10 w-36 h-36 rounded-full bg-[hsl(350_90%_60%/0.35)] blur-2xl" />
+          <p className="text-xs uppercase tracking-widest text-muted-foreground relative">This week's drop</p>
+          <h4 className="text-2xl font-bold mt-1 relative">{totalApps} premium apps. Zero cost.</h4>
+          <p className="text-sm text-muted-foreground mt-2 max-w-md relative">
+            Hand-picked premium APKs — fully unlocked. Browse the catalog and tap any app to learn more, or hit Get to download.
+          </p>
+          <div className="flex flex-wrap gap-2 mt-4 relative">
+            <Link
+              to="/"
+              className="liquid-btn liquid-btn-brand tap-press px-4 py-2 text-xs font-semibold text-white inline-flex items-center gap-1.5"
+            >
+              <Download className="w-4 h-4" /> Browse apps
+            </Link>
+            <Link
+              to="/contact"
+              className="liquid-btn tap-press px-4 py-2 text-xs font-semibold text-white inline-flex items-center gap-1.5"
+            >
+              <MessageCircle className="w-4 h-4" /> Suggest an app
+            </Link>
+          </div>
+        </div>
+      </section>
       <section className="mt-3 reveal">
         <div className="flex items-center justify-between mb-2 px-1">
           <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
