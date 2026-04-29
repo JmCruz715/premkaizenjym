@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 
 /**
- * Netflix-style intro: a giant K (Kaizen) zooms in with a shimmering
- * brand gradient, then explodes outward and fades. Plays once per
- * browser session so it doesn't get annoying.
+ * Netflix-style intro: a giant red "K" zooms in over a black background
+ * with a sweeping spotlight. Plays once per session.
  */
 export const SplashIntro = () => {
   const [show, setShow] = useState(() => {
@@ -29,9 +28,9 @@ export const SplashIntro = () => {
       {/* sparkle particles */}
       <div className="splash-particles" />
 
-      {/* The K */}
+      {/* The K — huge, bold, Netflix-red */}
       <div className="relative">
-        <span className="splash-letter text-[42vw] sm:text-[28vw] md:text-[22vw] lg:text-[18vw] font-black leading-none tracking-tighter select-none">
+        <span className="splash-letter text-[55vw] sm:text-[36vw] md:text-[28vw] lg:text-[22vw] font-black leading-[0.85] tracking-tighter select-none block text-center">
           K
         </span>
         {/* underline brand bar */}
