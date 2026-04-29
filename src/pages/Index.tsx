@@ -1,12 +1,9 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
 import { apps } from "@/data/apps";
 import { AppCard } from "@/components/AppCard";
 import { Header } from "@/components/Header";
 import { useUserApps } from "@/hooks/useUserApps";
 import {
-  Info,
-  MessageCircle,
   Sparkles,
   Film,
   Music,
