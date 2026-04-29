@@ -165,6 +165,21 @@
       0 12px 40px hsl(240 30% 30% / 0.12);
   }
 
+  /* ===== Light-mode text overrides =====
+     In dark mode buttons/icons use white text. In light mode plain
+     `text-white` becomes invisible against pale glass — flip it to dark.
+     But KEEP it white when sitting on a colorful gradient (brand button,
+     bg-gradient-to-*). */
+  .light .text-white { color: hsl(240 25% 12%); }
+  .light .liquid-btn-brand.text-white,
+  .light .liquid-btn-brand .text-white,
+  .light [class*="bg-gradient-to-"].text-white,
+  .light [class*="bg-gradient-to-"] .text-white,
+  .light [class*="from-"][class*="to-"].text-white,
+  .light [class*="from-"][class*="to-"] .text-white {
+    color: hsl(0 0% 100%);
+  }
+
   /* iOS 27 inspired liquid button — thicker glass, deeper highlights, bouncier press */
   .liquid-btn {
     @apply relative overflow-hidden rounded-full;
