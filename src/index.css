@@ -410,7 +410,7 @@
   animation: splash-tag 4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 .splash-glow {
-  background: radial-gradient(circle at center, hsl(280 90% 55% / 0.6), transparent 60%);
+  background: radial-gradient(circle at center, hsl(355 90% 45% / 0.7), transparent 60%);
   animation: splash-glow 4s ease-out forwards;
 }
 .splash-spotlight {
