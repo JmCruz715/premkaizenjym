@@ -1,142 +1,81 @@
 import { useMemo, useState } from "react";
-import { apps } from "@/data/apps";
 import { AppCard } from "@/components/AppCard";
 import { Header } from "@/components/Header";
-import { useUserApps } from "@/hooks/useUserApps";
-import {
-  Sparkles,
-  Film,
-  Music,
-  Video,
-  Gamepad2,
-  Camera,
-  MessageSquare,
-  Wrench,
-  Layers,
-} from "lucide-react";
-
-// Maps a raw category string from data into a friendly display group.
-const groupOf = (cat: string): string => {
-  const c = cat.toLowerCase();
-  if (c.includes("stream")) return "Streaming";
-  if (c.includes("music")) return "Music";
-  if (c.includes("video editor") || c.includes("ai")) return "Video Editing";
-  if (c.includes("video")) return "Video";
-  if (c.includes("game") || c.includes("gaming")) return "Games";
-  if (c.includes("photo")) return "Photography";
-  if (c.includes("commun") || c.includes("social")) return "Socials";
-  if (c.includes("tool")) return "Tools";
-  return "Other";
-};
-
-const groupMeta: Record<string, { icon: any; tint: string }> = {
-  All: { icon: Layers, tint: "from-fuchsia-500 to-blue-500" },
-  Streaming: { icon: Film, tint: "from-rose-500 to-orange-500" },
-  Music: { icon: Music, tint: "from-emerald-500 to-green-600" },
-  "Video Editing": { icon: Video, tint: "from-pink-500 to-indigo-500" },
-  Video: { icon: Video, tint: "from-red-500 to-rose-500" },
-  Games: { icon: Gamepad2, tint: "from-violet-500 to-blue-600" },
-  Photography: { icon: Camera, tint: "from-pink-500 to-yellow-500" },
-  Socials: { icon: MessageSquare, tint: "from-sky-500 to-indigo-500" },
-  Tools: { icon: Wrench, tint: "from-blue-500 to-cyan-500" },
-  Other: { icon: Sparkles, tint: "from-fuchsia-500 to-purple-600" },
-};
+import { useApps } from "@/hooks/useApps";
+import { Sparkles, Crown, Layers, Check } from "lucide-react";
 
 const Index = () => {
-  const { userApps } = useUserApps();
-  const all = useMemo(() => [...userApps, ...apps], [userApps]);
+  const { apps, rawRows, featured, loading } = useApps();
+  const [tab, setTab] = useState<"all" | "normal" | "premium">("all");
 
-  // Build groups dynamically from data so new apps auto-appear in the right list.
-  const groups = useMemo(() => {
-    const m = new Map<string, typeof all>();
-    for (const app of all) {
-      const g = groupOf(app.category);
-      if (!m.has(g)) m.set(g, []);
-      m.get(g)!.push(app);
-    }
-    // Preferred order — keep the experience consistent
-    const order = [
-      "Streaming",
-      "Games",
-      "Music",
-      "Video Editing",
-      "Video",
-      "Socials",
-      "Photography",
-      "Tools",
-      "Other",
-    ];
-    return order
-      .filter((k) => m.has(k))
-      .map((k) => [k, m.get(k)!] as const);
-  }, [all]);
+  const list = useMemo(() => {
+    if (tab === "all") return apps;
+    const slugSet = new Set(rawRows.filter((r) => r.app_type === tab).map((r) => r.slug));
+    return apps.filter((a) => slugSet.has(a.id));
+  }, [apps, rawRows, tab]);
 
-  const [active, setActive] = useState<string>("All");
-
-  const visibleGroups = active === "All" ? groups : groups.filter(([g]) => g === active);
-  const chipKeys = ["All", ...groups.map(([g]) => g)];
+  const tabs = [
+    { key: "all", label: "All", icon: Layers, tint: "from-fuchsia-500 to-blue-500", count: apps.length },
+    { key: "normal", label: "Normal", icon: Sparkles, tint: "from-sky-500 to-cyan-500", count: rawRows.filter((r) => r.app_type === "normal").length },
+    { key: "premium", label: "Premium", icon: Crown, tint: "from-amber-500 to-orange-500", count: rawRows.filter((r) => r.app_type === "premium").length },
+  ] as const;
 
   return (
     <>
       <Header title="Kaizen Apps" subtitle="Premium mobile apps — unlocked & free." />
 
-      {/* Category chip filter */}
-      <nav
-        aria-label="Categories"
-        className="flex gap-2 overflow-x-auto pb-2 mb-4 -mx-4 px-4 scrollbar-none snap-x"
-      >
-        {chipKeys.map((key) => {
-          const meta = groupMeta[key] || groupMeta.Other;
-          const Icon = meta.icon;
-          const isActive = active === key;
-          const count = key === "All" ? all.length : groups.find(([g]) => g === key)?.[1].length ?? 0;
+      {/* Normal / Premium tabs */}
+      <nav aria-label="App type" className="flex gap-2 overflow-x-auto pb-2 mb-4 -mx-4 px-4 scrollbar-none">
+        {tabs.map(({ key, label, icon: Icon, tint, count }) => {
+          const active = tab === key;
           return (
             <button
               key={key}
-              onClick={() => setActive(key)}
-              className={`shrink-0 snap-start tap-press inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold transition-all ${
-                isActive
-                  ? "text-white shadow-lg ring-1 ring-white/20 bg-gradient-to-r " + meta.tint
+              onClick={() => setTab(key)}
+              className={`shrink-0 tap-press inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold transition-all ${
+                active
+                  ? `text-white shadow-lg ring-1 ring-white/20 bg-gradient-to-r ${tint}`
                   : "glass text-muted-foreground hover:text-foreground"
               }`}
             >
-              <Icon className="w-3.5 h-3.5" />
-              {key}
-              <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${isActive ? "bg-white/20" : "bg-white/10"}`}>
-                {count}
-              </span>
+              <Icon className="w-3.5 h-3.5" /> {label}
+              <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${active ? "bg-white/20" : "bg-white/10"}`}>{count}</span>
             </button>
           );
         })}
       </nav>
 
-      {/* Grouped category sections */}
-      <div className="space-y-7">
-        {visibleGroups.map(([groupName, list]) => {
-          const meta = groupMeta[groupName] || groupMeta.Other;
-          const Icon = meta.icon;
-          return (
-            <section key={groupName} aria-label={groupName} className="space-y-3 reveal">
-              <div className="flex items-center justify-between mb-1 px-1">
-                <div className="flex items-center gap-2">
-                  <span
-                    className={`w-7 h-7 rounded-xl bg-gradient-to-br ${meta.tint} flex items-center justify-center shadow-md`}
-                  >
-                    <Icon className="w-4 h-4 text-white" />
+      {/* Featured circles */}
+      {featured.length > 0 && tab === "all" && (
+        <section className="mb-5 reveal">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5 mb-2 px-1">
+            <Crown className="w-3.5 h-3.5" /> Featured
+          </h3>
+          <div className="flex gap-3 overflow-x-auto -mx-4 px-4 pb-2 scrollbar-none">
+            {featured.map((a) => (
+              <a key={a.id} href={`/app/${a.id}`} className="shrink-0 tap-press text-center w-16">
+                <span className="relative inline-block">
+                  <img src={a.icon} alt={a.name} className="w-14 h-14 rounded-2xl object-cover ring-1 ring-white/15 shadow-lg" />
+                  <span className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[hsl(140_80%_45%)] ring-2 ring-background flex items-center justify-center shadow-md">
+                    <Check className="w-3 h-3 text-white" strokeWidth={4} />
                   </span>
-                  <h2 className="text-lg font-semibold">{groupName}</h2>
-                </div>
-                <span className="text-xs text-muted-foreground">{list.length} apps</span>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
-                {list.map((app, i) => (
-                  <AppCard key={app.id} app={app} index={i} />
-                ))}
-              </div>
-            </section>
-          );
-        })}
-      </div>
+                </span>
+                <p className="text-[10px] mt-1 truncate font-medium">{a.name}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {loading && apps.length === 0 ? (
+        <p className="text-center text-muted-foreground py-10 text-sm">Loading apps…</p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+          {list.map((app, i) => (
+            <AppCard key={app.id} app={app} index={i} />
+          ))}
+        </div>
+      )}
     </>
   );
 };
