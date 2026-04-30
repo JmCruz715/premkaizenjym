@@ -12,6 +12,8 @@ import About from "./pages/About.tsx";
 import Contact from "./pages/Contact.tsx";
 import AppDetail from "./pages/AppDetail.tsx";
 import Auth from "./pages/Auth.tsx";
+import Admin from "./pages/Admin.tsx";
+import AdminAddApp from "./pages/AdminAddApp.tsx";
 
 import NotFound from "./pages/NotFound.tsx";
 
@@ -33,7 +35,8 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/app/:id" element={<AppDetail />} />
             <Route path="/auth" element={<Auth />} />
-            
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/add" element={<AdminAddApp />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

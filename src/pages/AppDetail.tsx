@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Check, Download, Eye, Star } from "lucide-react";
 import { findApp } from "@/data/apps";
 import { DonateButton } from "@/components/DonateButton";
-import { useUserApps } from "@/hooks/useUserApps";
+import { useApps } from "@/hooks/useApps";
 import { triggerDownload } from "@/lib/download";
 import { useAppStats, trackView } from "@/hooks/useAppStats";
 
@@ -36,9 +36,9 @@ const screenshots: Record<string, string[]> = {
 
 const AppDetail = () => {
   const { id } = useParams();
-  const { userApps, screenshots: userShots, loading } = useUserApps();
-  const app = findApp(id || "") || userApps.find((a) => a.id === id);
-  const allShots = { ...screenshots, ...userShots };
+  const { apps, loading } = useApps();
+  const app = apps.find((a) => a.id === id) || findApp(id || "");
+  const allShots = screenshots;
   const { installs, views, refresh } = useAppStats(app?.id);
 
   // Bump local view counter once when this app's detail page mounts.
