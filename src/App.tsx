@@ -35,7 +35,8 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/app/:id" element={<AppDetail />} />
             <Route path="/auth" element={<Auth />} />
-            
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/add" element={<AdminAddApp />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
