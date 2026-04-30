@@ -32,9 +32,46 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          mlbb_id: string | null
+          portfolio_url: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          mlbb_id?: string | null
+          portfolio_url?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          mlbb_id?: string | null
+          portfolio_url?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_apps: {
         Row: {
           accent: string
+          app_type: string
           category: string
           created_at: string
           created_by: string | null
@@ -44,6 +81,8 @@ export type Database = {
           features: string[]
           icon_url: string | null
           id: string
+          is_featured: boolean
+          is_published: boolean
           name: string
           rating: number
           screenshots: string[]
@@ -55,6 +94,7 @@ export type Database = {
         }
         Insert: {
           accent?: string
+          app_type?: string
           category?: string
           created_at?: string
           created_by?: string | null
@@ -64,6 +104,8 @@ export type Database = {
           features?: string[]
           icon_url?: string | null
           id?: string
+          is_featured?: boolean
+          is_published?: boolean
           name: string
           rating?: number
           screenshots?: string[]
@@ -75,6 +117,7 @@ export type Database = {
         }
         Update: {
           accent?: string
+          app_type?: string
           category?: string
           created_at?: string
           created_by?: string | null
@@ -84,6 +127,8 @@ export type Database = {
           features?: string[]
           icon_url?: string | null
           id?: string
+          is_featured?: boolean
+          is_published?: boolean
           name?: string
           rating?: number
           screenshots?: string[]
