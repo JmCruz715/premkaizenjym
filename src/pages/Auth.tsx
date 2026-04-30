@@ -12,7 +12,7 @@ const Auth = () => {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) nav("/new");
+      if (data.session) nav("/admin");
     });
   }, [nav]);
 
@@ -23,7 +23,7 @@ const Auth = () => {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
       toast.success("Signed in");
-      nav("/upload");
+      nav("/admin");
     } catch (err: any) {
       toast.error(err.message || "Sign in failed");
     } finally {

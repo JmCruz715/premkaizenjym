@@ -12,6 +12,8 @@ import About from "./pages/About.tsx";
 import Contact from "./pages/Contact.tsx";
 import AppDetail from "./pages/AppDetail.tsx";
 import Auth from "./pages/Auth.tsx";
+import Admin from "./pages/Admin.tsx";
+import AdminAddApp from "./pages/AdminAddApp.tsx";
 
 import NotFound from "./pages/NotFound.tsx";
 
