@@ -1,9 +1,10 @@
-import { Home, Search, Sparkles, User } from "lucide-react";
+import { Home, Search, Sparkles, User, Bot } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 const items = [
   { to: "/", label: "Home", icon: Home, end: true },
   { to: "/search", label: "Search", icon: Search },
+  { to: "/ai", label: "AI", icon: Bot },
   { to: "/new", label: "New", icon: Sparkles },
   { to: "/profile", label: "Profile", icon: User },
 ];

@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.mediafire-direct]
 verify_jwt = false
+
+[functions.kaizen-chat]
+verify_jwt = false

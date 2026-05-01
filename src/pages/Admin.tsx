@@ -6,7 +6,8 @@ import { useApps } from "@/hooks/useApps";
 import { supabase } from "@/integrations/supabase/client";
 import { uploadAppFile } from "@/lib/uploads";
 import { toast } from "sonner";
-import { Plus, Trash2, Pencil, Save, X, Crown, Sparkles, ShieldCheck, ExternalLink, Upload, Link as LinkIcon } from "lucide-react";
+import { Plus, Trash2, Pencil, Save, X, Crown, Sparkles, ShieldCheck, ExternalLink, Upload, Link as LinkIcon, Bot } from "lucide-react";
+import { AdminAiChat } from "@/components/AdminAiChat";
 
 const Admin = () => {
   const { user, isAdmin, loading } = useAuth();
@@ -69,6 +70,11 @@ const Admin = () => {
         <Link to="/profile" className="liquid-btn tap-press px-4 py-2 text-xs font-semibold text-white inline-flex items-center gap-1.5">
           <ShieldCheck className="w-4 h-4" /> Profile
         </Link>
+      </div>
+
+      {/* Lovable AI admin assistant */}
+      <div className="mb-5">
+        <AdminAiChat onAfterAction={refresh} />
       </div>
 
       <div className="space-y-2">

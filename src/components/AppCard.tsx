@@ -15,7 +15,7 @@ export const AppCard = ({ app, index = 0 }: { app: App; index?: number }) => {
   const { installs, views } = useAppStats(app.id);
   return (
     <article
-      className="reveal ripple glass rounded-3xl p-4 flex items-center gap-4 hover:scale-[1.015] active:scale-[0.985] transition-transform duration-200"
+      className="reveal ripple glass rounded-2xl p-3 flex items-center gap-3 hover:scale-[1.015] active:scale-[0.985] transition-transform duration-200"
       style={{ transitionDelay: `${Math.min(index * 40, 240)}ms` }}
       onPointerDown={(e) => {
         const t = e.currentTarget as HTMLElement;
@@ -29,30 +29,30 @@ export const AppCard = ({ app, index = 0 }: { app: App; index?: number }) => {
           src={app.icon}
           alt={`${app.name} icon`}
           loading="lazy"
-          width={64}
-          height={64}
-          className="w-16 h-16 rounded-2xl object-cover ring-1 ring-white/15 shadow-lg"
+          width={52}
+          height={52}
+          className="w-[52px] h-[52px] rounded-xl object-cover ring-1 ring-white/15 shadow-lg"
         />
       </Link>
       <div className="flex-1 min-w-0">
         <Link to={`/app/${app.id}`} className="block tap-press">
-          <h3 className="font-semibold text-foreground truncate">{app.name}</h3>
-          <p className="text-xs text-muted-foreground truncate">{app.tagline}</p>
-          <div className="flex items-center gap-2.5 mt-1 text-[11px] text-muted-foreground flex-wrap">
+          <h3 className="font-semibold text-foreground truncate text-sm">{app.name}</h3>
+          <p className="text-[11px] text-muted-foreground truncate">{app.tagline}</p>
+          <div className="flex items-center gap-2 mt-0.5 text-[10px] text-muted-foreground flex-wrap">
             <span className="flex items-center gap-1">
-              <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" /> {app.rating}
+              <Star className="w-2.5 h-2.5 fill-yellow-400 text-yellow-400" /> {app.rating}
             </span>
             <span className="flex items-center gap-1" title="Installs">
-              <Download className="w-3 h-3" /> {fmt(installs)}
+              <Download className="w-2.5 h-2.5" /> {fmt(installs)}
             </span>
             <span className="flex items-center gap-1" title="Views">
-              <Eye className="w-3 h-3" /> {fmt(views)}
+              <Eye className="w-2.5 h-2.5" /> {fmt(views)}
             </span>
             <span className="truncate opacity-70">{app.category}</span>
           </div>
         </Link>
       </div>
-      <div className="flex flex-col gap-1.5 shrink-0">
+      <div className="flex flex-col gap-1 shrink-0">
         <a
           href={app.url}
           target="_blank"
@@ -62,12 +62,12 @@ export const AppCard = ({ app, index = 0 }: { app: App; index?: number }) => {
             triggerDownload(app.url, `${app.name}.apk`, app.id);
           }}
           aria-label={`Download ${app.name}`}
-          className="liquid-btn liquid-btn-brand tap-press px-3.5 py-2 text-xs font-semibold text-white inline-flex items-center justify-center gap-1.5"
+          className="liquid-btn liquid-btn-brand tap-press px-2.5 py-1.5 text-[11px] font-semibold text-white inline-flex items-center justify-center gap-1"
         >
-          <Download className="w-3.5 h-3.5" />
+          <Download className="w-3 h-3" />
           Get
         </a>
-        <DonateButton className="px-3.5 py-2 text-xs font-semibold" />
+        <DonateButton className="px-2.5 py-1.5 text-[11px] font-semibold" />
       </div>
     </article>
   );

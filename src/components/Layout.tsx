@@ -29,9 +29,10 @@ export const Layout = () => {
           <div className="absolute bottom-0 left-1/3 w-[30rem] h-[30rem] rounded-full bg-[hsl(280_90%_55%/0.30)] blur-3xl animate-blob" style={{ animationDelay: "6s" }} />
         </div>
         {/* Responsive: phone (max 2xl base), tablet (~3xl), desktop wider */}
+        {/* iPad-portrait sized container (~820px) */}
         <main
           key={location.pathname}
-          className="max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 animate-fade-up"
+          className="max-w-[820px] mx-auto px-4 sm:px-6 pt-6 animate-fade-up"
         >
           <Outlet />
         </main>
