@@ -14,6 +14,7 @@ import AppDetail from "./pages/AppDetail.tsx";
 import Auth from "./pages/Auth.tsx";
 import Admin from "./pages/Admin.tsx";
 import AdminAddApp from "./pages/AdminAddApp.tsx";
+import Ai from "./pages/Ai.tsx";
 
 import NotFound from "./pages/NotFound.tsx";
 
@@ -29,6 +30,7 @@ const App = () => (
           <Route element={<Layout />}>
             <Route path="/" element={<Index />} />
             <Route path="/search" element={<SearchPage />} />
+            <Route path="/ai" element={<Ai />} />
             <Route path="/new" element={<NewPage />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/about" element={<About />} />
