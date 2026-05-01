@@ -1,0 +1,1 @@
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS badge_style TEXT NOT NULL DEFAULT 'classic';
