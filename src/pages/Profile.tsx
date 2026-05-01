@@ -192,7 +192,7 @@ const Profile = () => {
           ) : (
             <h2 className="text-2xl sm:text-3xl font-bold">{displayName}</h2>
           )}
-          <span className="verified-badge" aria-label="Verified" title="Verified creator">
+          <span className={`verified-badge badge-${(view as any)?.badge_style || "classic"}`} aria-label="Verified" title="Verified creator">
             <Check />
           </span>
         </div>
@@ -217,6 +217,16 @@ const Profile = () => {
             <input value={draftPortfolio} onChange={(e) => setDraftPortfolio(e.target.value)} className="bg-background/40 rounded-xl px-3 py-2 text-sm outline-none border border-white/20 focus:border-white/50" />
             <label className="text-[10px] uppercase tracking-wider text-muted-foreground mt-1">MLBB ID</label>
             <input value={draftMlbb} onChange={(e) => setDraftMlbb(e.target.value)} className="bg-background/40 rounded-xl px-3 py-2 text-sm outline-none border border-white/20 focus:border-white/50" />
+            <label className="text-[10px] uppercase tracking-wider text-muted-foreground mt-1">Verified badge style</label>
+            <BadgePicker
+              value={(myProfile as any)?.badge_style || "classic"}
+              onChange={async (style) => {
+                if (!user) return;
+                const { error } = await supabase.from("profiles").update({ badge_style: style }).eq("user_id", user.id);
+                if (error) toast.error(error.message);
+                else { toast.success("Badge updated"); refreshMine(); }
+              }}
+            />
           </div>
         )}
 
@@ -369,6 +379,32 @@ const StatCard = ({ label, value, delay }: { label: string; value: string; delay
     <p className="text-[9px] uppercase tracking-wider text-muted-foreground">{label}</p>
   </div>
 );
+
+const BADGE_STYLES = [
+  { id: "classic",  label: "Classic blue" },
+  { id: "sapphire", label: "Sapphire" },
+  { id: "diamond",  label: "Diamond" },
+  { id: "cyan",     label: "Cyan" },
+  { id: "gradient", label: "Gradient" },
+];
+
+const BadgePicker = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => (
+  <div className="flex flex-wrap gap-2">
+    {BADGE_STYLES.map((b) => (
+      <button
+        key={b.id}
+        type="button"
+        onClick={() => onChange(b.id)}
+        className={`tap-press flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] font-medium border ${value === b.id ? "border-white/60 bg-white/10" : "border-white/15 bg-white/5"}`}
+        title={b.label}
+      >
+        <span className={`verified-badge badge-${b.id}`} style={{ width: 14, height: 14 }}><Check /></span>
+        {b.label}
+      </button>
+    ))}
+  </div>
+);
+
 
 const InfoRow = ({ icon: Icon, tint, iconClass, label, value }: any) => (
   <div className="flex items-center gap-3 text-sm">
