@@ -264,13 +264,13 @@ const Profile = () => {
       <section className="mt-3 reveal">
         <button
           onClick={openMlbb}
-          className="mlbb-btn tap-press w-full rounded-3xl p-4 flex items-center gap-3 group"
+          className="mlbb-btn tap-press w-full rounded-3xl p-3 flex items-center gap-3 group"
         >
-          <span className="w-12 h-12 rounded-2xl bg-black/30 flex items-center justify-center shrink-0 ring-1 ring-white/30">
-            <Sword className="w-6 h-6" />
+          <span className="w-10 h-10 rounded-2xl bg-black/30 flex items-center justify-center shrink-0 ring-1 ring-white/30">
+            <Sword className="w-5 h-5" />
           </span>
           <div className="flex-1 min-w-0 text-left">
-            <p className="text-sm font-bold flex items-center gap-1.5">
+            <p className="text-xs sm:text-sm font-bold flex items-center gap-1.5">
               Add me on Mobile Legends <ExternalLink className="w-3.5 h-3.5 opacity-80" />
             </p>
             <p className="text-[11px] opacity-90">ID: {mlbbId} · Tap to send friend request</p>
@@ -322,7 +322,7 @@ const Profile = () => {
             <span className="w-1.5 h-1.5 rounded-full bg-[hsl(140_80%_45%)] pulse-dot" /> Real-time
           </span>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
           <StatCard label="Apps" value={String(totalApps)} delay={0} />
           <StatCard label="Installs" value={fmt(totalInstalls)} delay={80} />
           <StatCard label="Views" value={fmt(totalViews)} delay={160} />
