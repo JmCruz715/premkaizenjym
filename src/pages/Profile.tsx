@@ -278,6 +278,24 @@ const Profile = () => {
         </button>
       </section>
 
+      {/* ───── Live Stats ───── */}
+      <section className="mt-3 reveal">
+        <div className="flex items-center justify-between mb-2 px-1">
+          <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+            <TrendingUp className="w-3.5 h-3.5" /> Live Stats
+          </h3>
+          <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider text-muted-foreground">
+            <span className="w-1.5 h-1.5 rounded-full bg-[hsl(140_80%_45%)] pulse-dot" /> Real-time
+          </span>
+        </div>
+        <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
+          <StatCard label="Apps" value={String(totalApps)} delay={0} />
+          <StatCard label="Installs" value={fmt(totalInstalls)} delay={80} />
+          <StatCard label="Views" value={fmt(totalViews)} delay={160} />
+          <StatCard label="Rating" value={`${avgRating}★`} delay={240} />
+        </div>
+      </section>
+
       {/* ───── Featured Drop ───── */}
       {featured.length > 0 && (
         <section className="mt-3 reveal">
@@ -311,24 +329,6 @@ const Profile = () => {
           </div>
         </section>
       )}
-
-      {/* ───── Live Stats ───── */}
-      <section className="mt-3 reveal">
-        <div className="flex items-center justify-between mb-2 px-1">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
-            <TrendingUp className="w-3.5 h-3.5" /> Live Stats
-          </h3>
-          <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider text-muted-foreground">
-            <span className="w-1.5 h-1.5 rounded-full bg-[hsl(140_80%_45%)] pulse-dot" /> Real-time
-          </span>
-        </div>
-        <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
-          <StatCard label="Apps" value={String(totalApps)} delay={0} />
-          <StatCard label="Installs" value={fmt(totalInstalls)} delay={80} />
-          <StatCard label="Views" value={fmt(totalViews)} delay={160} />
-          <StatCard label="Rating" value={`${avgRating}★`} delay={240} />
-        </div>
-      </section>
 
       {/* ───── About Me ───── */}
       <section className="mt-3 reveal">
