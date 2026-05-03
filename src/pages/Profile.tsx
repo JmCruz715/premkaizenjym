@@ -134,7 +134,7 @@ const Profile = () => {
       {/* Sidebar drawer */}
       <ProfileMenu open={menuOpen} onClose={() => setMenuOpen(false)} isAdmin={isAdmin} signedIn={!!user} onSignOut={signOut} />
 
-      <div className="flex items-start justify-between gap-2 mb-4">
+      <div className="flex items-start justify-between gap-2 mb-3">
         <button
           onClick={() => setMenuOpen(true)}
           className="liquid-btn tap-press w-11 h-11 inline-flex items-center justify-center text-white shrink-0"
@@ -148,11 +148,11 @@ const Profile = () => {
       </div>
 
       {/* ───── Hero card ───── */}
-      <section className="glass-strong rounded-3xl p-5 sm:p-6 text-center animate-fade-up relative overflow-hidden">
+      <section className="glass-strong rounded-3xl p-4 sm:p-6 text-center animate-fade-up relative overflow-hidden">
         <div className="absolute -top-20 -left-16 w-56 h-56 rounded-full bg-gradient-to-br from-fuchsia-500 to-blue-500 opacity-25 blur-3xl pointer-events-none animate-blob" />
         <div className="absolute -bottom-24 -right-20 w-64 h-64 rounded-full bg-gradient-to-br from-orange-500 to-pink-500 opacity-20 blur-3xl pointer-events-none animate-blob" style={{ animationDelay: "3s" }} />
 
-        <div className="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto animate-float">
+        <div className="relative w-24 h-24 sm:w-32 sm:h-32 mx-auto animate-float">
           <div className="absolute inset-0 rounded-full p-[3px] bg-[image:var(--gradient-brand)] animate-pop-in">
             <div className="absolute inset-[-6px] rounded-full bg-[conic-gradient(from_0deg,hsl(280_90%_60%/.6),transparent_30%,hsl(220_95%_60%/.6),transparent_70%,hsl(350_90%_60%/.6))] blur-md animate-spin-slow -z-10" />
             <img
@@ -182,7 +182,7 @@ const Profile = () => {
           )}
         </div>
 
-        <div className="mt-4 flex items-center justify-center gap-1.5 relative">
+        <div className="mt-3 flex items-center justify-center gap-1.5 relative">
           {editing ? (
             <input
               value={draftName}
@@ -190,7 +190,7 @@ const Profile = () => {
               className="text-2xl sm:text-3xl font-bold bg-background/40 rounded-xl px-3 py-1 text-center outline-none border border-white/20 focus:border-white/50 max-w-xs"
             />
           ) : (
-            <h2 className="text-2xl sm:text-3xl font-bold">{displayName}</h2>
+            <h2 className="text-xl sm:text-3xl font-bold">{displayName}</h2>
           )}
           <span className={`verified-badge badge-${(view as any)?.badge_style || "classic"}`} aria-label="Verified" title="Verified creator">
             <Check />
@@ -208,7 +208,7 @@ const Profile = () => {
             className="mt-3 w-full max-w-sm mx-auto block bg-background/40 rounded-xl px-3 py-2 text-sm outline-none border border-white/20 focus:border-white/50"
           />
         ) : (
-          <p className="text-sm text-muted-foreground mt-3 max-w-sm mx-auto relative leading-relaxed">{bio}</p>
+          <p className="text-xs sm:text-sm text-muted-foreground mt-2 max-w-sm mx-auto relative leading-relaxed">{bio}</p>
         )}
 
         {editing && (
@@ -231,7 +231,7 @@ const Profile = () => {
         )}
 
         {/* Quick action buttons */}
-        <div className="grid grid-cols-2 gap-2 mt-5 relative max-w-sm mx-auto">
+        <div className="grid grid-cols-2 gap-2 mt-4 relative max-w-sm mx-auto">
           {editing ? (
             <>
               <button onClick={saveProfile} disabled={busy} className="liquid-btn liquid-btn-brand tap-press px-3 py-2.5 text-xs font-semibold text-white inline-flex items-center justify-center gap-1.5">
