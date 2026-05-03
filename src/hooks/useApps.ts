@@ -27,6 +27,16 @@ export type DBApp = {
 // Build a slug → static-icon map so DB rows reuse bundled images.
 const staticIconMap = new Map(staticApps.map((a) => [a.id, a.icon] as const));
 const staticAccentMap = new Map(staticApps.map((a) => [a.id, a.accent] as const));
+const staticUrlMap = new Map(staticApps.map((a) => [a.id, a.url] as const));
+
+const looksBrokenIcon = (url?: string | null) =>
+  !url || /download|apk|file/i.test(url.split("/").pop() || "");
+
+const preferMediaFireOrStatic = (slug: string, dbUrl: string) => {
+  const staticUrl = staticUrlMap.get(slug);
+  if (staticUrl?.includes("mediafire.com") && !dbUrl.includes("mediafire.com")) return staticUrl;
+  return dbUrl;
+};
 
 export function dbToApp(row: DBApp): App {
   return {
@@ -34,14 +44,14 @@ export function dbToApp(row: DBApp): App {
     name: row.name,
     tagline: row.tagline,
     description: row.description,
-    icon: row.icon_url || staticIconMap.get(row.slug) || "/placeholder.svg",
+    icon: looksBrokenIcon(row.icon_url) ? staticIconMap.get(row.slug) || "/placeholder.svg" : row.icon_url!,
     version: row.version,
     size: row.size,
     category: row.category,
     rating: Number(row.rating),
     downloads: row.downloads,
     addedAt: row.created_at,
-    url: row.download_url,
+    url: preferMediaFireOrStatic(row.slug, row.download_url),
     features: row.features || [],
     accent: row.accent || staticAccentMap.get(row.slug) || "from-fuchsia-500 to-blue-500",
   };
