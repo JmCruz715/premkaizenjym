@@ -86,6 +86,24 @@ const tools = [
       parameters: { type: "object", properties: { patch: { type: "object" } }, required: ["patch"] },
     },
   },
+  {
+    type: "function",
+    function: {
+      name: "update_layout",
+      description: "Update mobile-first layout settings such as page width, card size/density, spacing, and compact mode.",
+      parameters: {
+        type: "object",
+        properties: {
+          maxWidth: { type: "number", description: "Main page max width in pixels. Use 360-430 for phone-like, 768-820 for iPad-like." },
+          density: { type: "string", enum: ["compact", "comfortable", "large"] },
+          cardSize: { type: "string", enum: ["small", "medium", "large"] },
+          spacing: { type: "string", enum: ["tight", "normal", "wide"] },
+          mobileFirst: { type: "boolean" },
+        },
+        additionalProperties: false,
+      },
+    },
+  },
 ];
 
 Deno.serve(async (req) => {
@@ -110,7 +128,7 @@ Deno.serve(async (req) => {
 
     const { messages } = await req.json();
     const convo: any[] = [
-      { role: "system", content: "You are KaizenAdminAI — the admin's assistant. You can manage apps and profile via tools. Always confirm what you did briefly. If the user asks to upload an app via link, use create_app. Generate a sensible slug from the name. Always respond in the user's language (Tagalog/English)." },
+      { role: "system", content: "You are KaizenAdminAI — the admin's assistant. You can manage apps, profile, and layout settings via tools. If the user asks to adjust page size, mobile layout, card size, spacing, range, iPad/phone width, or make things compact/larger, use update_layout. If the user asks to upload an app via link, use create_app and keep the original download_url exactly as provided, especially MediaFire links. Generate a sensible slug from the name. Always confirm what you did briefly in Tagalog/English." },
       ...messages,
     ];
 
@@ -182,6 +200,17 @@ Deno.serve(async (req) => {
             const { data, error } = await admin.from("profiles").update(args.patch || {}).eq("user_id", userId).select().single();
             if (error) throw error;
             result = { ok: true, profile: data };
+          } else if (name === "update_layout") {
+            const current = {
+              maxWidth: Math.min(820, Math.max(320, Number(args.maxWidth ?? 430))),
+              density: args.density ?? "compact",
+              cardSize: args.cardSize ?? (args.density === "large" ? "large" : args.density === "comfortable" ? "medium" : "small"),
+              spacing: args.spacing ?? (args.density === "large" ? "wide" : args.density === "comfortable" ? "normal" : "tight"),
+              mobileFirst: args.mobileFirst ?? true,
+            };
+            const { data, error } = await admin.from("site_settings").upsert({ key: "layout", value: current }).select().single();
+            if (error) throw error;
+            result = { ok: true, layout: data };
           } else {
             result = { ok: false, error: `Unknown tool ${name}` };
           }

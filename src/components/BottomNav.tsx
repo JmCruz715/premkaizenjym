@@ -13,9 +13,9 @@ export const BottomNav = () => {
   return (
     <nav
       aria-label="Primary"
-      className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[min(92%,28rem)]"
+      className="fixed bottom-3 left-1/2 -translate-x-1/2 z-50 w-[min(92%,26rem)]"
     >
-      <div className="glass-strong rounded-full px-2 py-2 flex items-center justify-between">
+      <div className="glass-strong rounded-full px-1.5 py-1.5 flex items-center justify-between">
         {items.map(({ to, label, icon: Icon, end }) => (
           <NavLink
             key={to}
@@ -32,7 +32,7 @@ export const BottomNav = () => {
             {({ isActive }) => (
               <>
                 <Icon
-                  className={`w-5 h-5 transition-transform duration-300 ${
+                  className={`w-4 h-4 transition-transform duration-300 ${
                     isActive ? "scale-110" : ""
                   }`}
                 />

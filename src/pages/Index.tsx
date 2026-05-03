@@ -25,14 +25,14 @@ const Index = () => {
       <Header title="Kaizen Apps" subtitle="Premium mobile apps — unlocked & free." />
 
       {/* Normal / Premium tabs */}
-      <nav aria-label="App type" className="flex gap-2 overflow-x-auto pb-2 mb-4 -mx-4 px-4 scrollbar-none">
+      <nav aria-label="App type" className="flex gap-2 overflow-x-auto pb-2 mb-3 -mx-4 px-4 scrollbar-none">
         {tabs.map(({ key, label, icon: Icon, tint, count }) => {
           const active = tab === key;
           return (
             <button
               key={key}
               onClick={() => setTab(key)}
-              className={`shrink-0 tap-press inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold transition-all ${
+              className={`shrink-0 tap-press inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold transition-all ${
                 active
                   ? `text-white shadow-lg ring-1 ring-white/20 bg-gradient-to-r ${tint}`
                   : "glass text-muted-foreground hover:text-foreground"
@@ -70,7 +70,7 @@ const Index = () => {
       {loading && apps.length === 0 ? (
         <p className="text-center text-muted-foreground py-10 text-sm">Loading apps…</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2.5">
           {list.map((app, i) => (
             <AppCard key={app.id} app={app} index={i} />
           ))}

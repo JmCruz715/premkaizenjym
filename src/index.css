@@ -346,6 +346,18 @@
   transform: translateY(0);
 }
 
+@media (max-width: 480px) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .mobile-compact-shell .animate-blob {
+    opacity: 0.55;
+  }
+}
+
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }

@@ -17,6 +17,10 @@ export function getDownloadUrl(url: string): string {
   return url;
 }
 
+export function isMediaFireUrl(url: string): boolean {
+  return /(^|\.)mediafire\.com/i.test(url) || /\/functions\/v1\/mediafire-direct/i.test(url);
+}
+
 function inferFilename(url: string, fallback?: string): string {
   try {
     const u = new URL(url);
@@ -40,6 +44,21 @@ export async function triggerDownload(url: string, filename?: string, slug?: str
   const proxied = getDownloadUrl(url);
 
   toast({ title: "Starting download…", description: fname });
+
+  // MediaFire is already handled by the resolver function. Fetching the 302 as
+  // a blob often fails on phones, so use native browser download/open behavior.
+  if (isMediaFireUrl(url)) {
+    const a = document.createElement("a");
+    a.href = proxied;
+    a.download = fname;
+    a.rel = "noopener";
+    a.target = "_blank";
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => a.remove(), 1000);
+    return;
+  }
 
   // Strategy 1 — fetch as blob (works for our own storage bucket + CORS hosts)
   try {

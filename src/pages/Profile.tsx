@@ -134,7 +134,7 @@ const Profile = () => {
       {/* Sidebar drawer */}
       <ProfileMenu open={menuOpen} onClose={() => setMenuOpen(false)} isAdmin={isAdmin} signedIn={!!user} onSignOut={signOut} />
 
-      <div className="flex items-start justify-between gap-2 mb-4">
+      <div className="flex items-start justify-between gap-2 mb-3">
         <button
           onClick={() => setMenuOpen(true)}
           className="liquid-btn tap-press w-11 h-11 inline-flex items-center justify-center text-white shrink-0"
@@ -148,11 +148,11 @@ const Profile = () => {
       </div>
 
       {/* ───── Hero card ───── */}
-      <section className="glass-strong rounded-3xl p-5 sm:p-6 text-center animate-fade-up relative overflow-hidden">
+      <section className="glass-strong rounded-3xl p-4 sm:p-6 text-center animate-fade-up relative overflow-hidden">
         <div className="absolute -top-20 -left-16 w-56 h-56 rounded-full bg-gradient-to-br from-fuchsia-500 to-blue-500 opacity-25 blur-3xl pointer-events-none animate-blob" />
         <div className="absolute -bottom-24 -right-20 w-64 h-64 rounded-full bg-gradient-to-br from-orange-500 to-pink-500 opacity-20 blur-3xl pointer-events-none animate-blob" style={{ animationDelay: "3s" }} />
 
-        <div className="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto animate-float">
+        <div className="relative w-24 h-24 sm:w-32 sm:h-32 mx-auto animate-float">
           <div className="absolute inset-0 rounded-full p-[3px] bg-[image:var(--gradient-brand)] animate-pop-in">
             <div className="absolute inset-[-6px] rounded-full bg-[conic-gradient(from_0deg,hsl(280_90%_60%/.6),transparent_30%,hsl(220_95%_60%/.6),transparent_70%,hsl(350_90%_60%/.6))] blur-md animate-spin-slow -z-10" />
             <img
@@ -182,7 +182,7 @@ const Profile = () => {
           )}
         </div>
 
-        <div className="mt-4 flex items-center justify-center gap-1.5 relative">
+        <div className="mt-3 flex items-center justify-center gap-1.5 relative">
           {editing ? (
             <input
               value={draftName}
@@ -190,7 +190,7 @@ const Profile = () => {
               className="text-2xl sm:text-3xl font-bold bg-background/40 rounded-xl px-3 py-1 text-center outline-none border border-white/20 focus:border-white/50 max-w-xs"
             />
           ) : (
-            <h2 className="text-2xl sm:text-3xl font-bold">{displayName}</h2>
+            <h2 className="text-xl sm:text-3xl font-bold">{displayName}</h2>
           )}
           <span className={`verified-badge badge-${(view as any)?.badge_style || "classic"}`} aria-label="Verified" title="Verified creator">
             <Check />
@@ -208,7 +208,7 @@ const Profile = () => {
             className="mt-3 w-full max-w-sm mx-auto block bg-background/40 rounded-xl px-3 py-2 text-sm outline-none border border-white/20 focus:border-white/50"
           />
         ) : (
-          <p className="text-sm text-muted-foreground mt-3 max-w-sm mx-auto relative leading-relaxed">{bio}</p>
+          <p className="text-xs sm:text-sm text-muted-foreground mt-2 max-w-sm mx-auto relative leading-relaxed">{bio}</p>
         )}
 
         {editing && (
@@ -231,7 +231,7 @@ const Profile = () => {
         )}
 
         {/* Quick action buttons */}
-        <div className="grid grid-cols-2 gap-2 mt-5 relative max-w-sm mx-auto">
+        <div className="grid grid-cols-2 gap-2 mt-4 relative max-w-sm mx-auto">
           {editing ? (
             <>
               <button onClick={saveProfile} disabled={busy} className="liquid-btn liquid-btn-brand tap-press px-3 py-2.5 text-xs font-semibold text-white inline-flex items-center justify-center gap-1.5">
@@ -264,18 +264,36 @@ const Profile = () => {
       <section className="mt-3 reveal">
         <button
           onClick={openMlbb}
-          className="mlbb-btn tap-press w-full rounded-3xl p-4 flex items-center gap-3 group"
+          className="mlbb-btn tap-press w-full rounded-3xl p-3 flex items-center gap-3 group"
         >
-          <span className="w-12 h-12 rounded-2xl bg-black/30 flex items-center justify-center shrink-0 ring-1 ring-white/30">
-            <Sword className="w-6 h-6" />
+          <span className="w-10 h-10 rounded-2xl bg-black/30 flex items-center justify-center shrink-0 ring-1 ring-white/30">
+            <Sword className="w-5 h-5" />
           </span>
           <div className="flex-1 min-w-0 text-left">
-            <p className="text-sm font-bold flex items-center gap-1.5">
+            <p className="text-xs sm:text-sm font-bold flex items-center gap-1.5">
               Add me on Mobile Legends <ExternalLink className="w-3.5 h-3.5 opacity-80" />
             </p>
             <p className="text-[11px] opacity-90">ID: {mlbbId} · Tap to send friend request</p>
           </div>
         </button>
+      </section>
+
+      {/* ───── Live Stats ───── */}
+      <section className="mt-3 reveal">
+        <div className="flex items-center justify-between mb-2 px-1">
+          <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+            <TrendingUp className="w-3.5 h-3.5" /> Live Stats
+          </h3>
+          <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider text-muted-foreground">
+            <span className="w-1.5 h-1.5 rounded-full bg-[hsl(140_80%_45%)] pulse-dot" /> Real-time
+          </span>
+        </div>
+        <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
+          <StatCard label="Apps" value={String(totalApps)} delay={0} />
+          <StatCard label="Installs" value={fmt(totalInstalls)} delay={80} />
+          <StatCard label="Views" value={fmt(totalViews)} delay={160} />
+          <StatCard label="Rating" value={`${avgRating}★`} delay={240} />
+        </div>
       </section>
 
       {/* ───── Featured Drop ───── */}
@@ -311,24 +329,6 @@ const Profile = () => {
           </div>
         </section>
       )}
-
-      {/* ───── Live Stats ───── */}
-      <section className="mt-3 reveal">
-        <div className="flex items-center justify-between mb-2 px-1">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
-            <TrendingUp className="w-3.5 h-3.5" /> Live Stats
-          </h3>
-          <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider text-muted-foreground">
-            <span className="w-1.5 h-1.5 rounded-full bg-[hsl(140_80%_45%)] pulse-dot" /> Real-time
-          </span>
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          <StatCard label="Apps" value={String(totalApps)} delay={0} />
-          <StatCard label="Installs" value={fmt(totalInstalls)} delay={80} />
-          <StatCard label="Views" value={fmt(totalViews)} delay={160} />
-          <StatCard label="Rating" value={`${avgRating}★`} delay={240} />
-        </div>
-      </section>
 
       {/* ───── About Me ───── */}
       <section className="mt-3 reveal">
@@ -374,9 +374,9 @@ const Profile = () => {
 };
 
 const StatCard = ({ label, value, delay }: { label: string; value: string; delay: number }) => (
-  <div className="glass rounded-2xl py-3 text-center tap-press animate-slide-up-bounce" style={{ animationDelay: `${delay}ms` }}>
-    <p className="text-base font-bold text-gradient">{value}</p>
-    <p className="text-[9px] uppercase tracking-wider text-muted-foreground">{label}</p>
+  <div className="glass rounded-2xl py-2 text-center tap-press animate-slide-up-bounce min-w-0" style={{ animationDelay: `${delay}ms` }}>
+    <p className="text-sm sm:text-base font-bold text-gradient truncate">{value}</p>
+    <p className="text-[8px] sm:text-[9px] uppercase tracking-wider text-muted-foreground truncate">{label}</p>
   </div>
 );
 

@@ -12,7 +12,7 @@ type Msg = { role: "user" | "assistant"; content: string };
  */
 export const AdminAiChat = ({ onAfterAction }: { onAfterAction?: () => void }) => {
   const [messages, setMessages] = useState<Msg[]>([
-    { role: "assistant", content: "Kumusta admin! Sabihin mo lang — *'mag-add ng new app: TikTok Premium, link: https://...'* o *'palitan badge ko sa diamond'* — gagawin ko agad." },
+    { role: "assistant", content: "Kumusta admin! Kaya kong mag-add/edit/delete ng apps, panatilihin ang MediaFire links, palitan profile/badge, at i-adjust ang mobile layout range/card size. Hal: 'gawing compact pang-phone ang layout'." },
   ]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
@@ -54,7 +54,7 @@ export const AdminAiChat = ({ onAfterAction }: { onAfterAction?: () => void }) =
         </span>
         <div>
           <h3 className="text-sm font-bold">Lovable Admin AI</h3>
-          <p className="text-[10px] text-muted-foreground">Tool-powered: create / edit / delete apps, update profile</p>
+          <p className="text-[10px] text-muted-foreground">Apps, profile, MediaFire links, at mobile layout</p>
         </div>
       </div>
 
