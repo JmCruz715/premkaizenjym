@@ -374,9 +374,9 @@ const Profile = () => {
 };
 
 const StatCard = ({ label, value, delay }: { label: string; value: string; delay: number }) => (
-  <div className="glass rounded-2xl py-3 text-center tap-press animate-slide-up-bounce" style={{ animationDelay: `${delay}ms` }}>
-    <p className="text-base font-bold text-gradient">{value}</p>
-    <p className="text-[9px] uppercase tracking-wider text-muted-foreground">{label}</p>
+  <div className="glass rounded-2xl py-2 text-center tap-press animate-slide-up-bounce min-w-0" style={{ animationDelay: `${delay}ms` }}>
+    <p className="text-sm sm:text-base font-bold text-gradient truncate">{value}</p>
+    <p className="text-[8px] sm:text-[9px] uppercase tracking-wider text-muted-foreground truncate">{label}</p>
   </div>
 );
 
